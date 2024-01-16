@@ -1,7 +1,7 @@
 ---
 import Base from "../layout/Base.astro";
-import Supabase from "../icons/Supabase.astro";
-import AstroIcon from "../icons/AstroIcon.astro";
+import AppIcon from "../icons/AppIcon.astro";
+// import AstroIcon from "../icons/AstroIcon.astro";
 export const prerender = true;
 const title = "Sky for China stock market";
 ---
@@ -10,19 +10,15 @@ const title = "Sky for China stock market";
   <main class="flex-1 flex flex-col gap-4 items-center p-4 justify-center">
     <h1 class="text-2xl sm:text-4xl font-bold text-center">{title}</h1>
     <ul class="flex gap-6 items-center font-bold text-2xl mt-6">
-      <li
-        class="dark:bg-zinc-800 bg-white border-t dark:border-zinc-700 h-20 w-20 border-transparent rounded-lg shadow dark:shadow-none flex items-center justify-center"
-      >
-        <AstroIcon />
-      </li>
-       &plus;
-      <li
-        class="dark:bg-zinc-800 bg-white border-t dark:border-zinc-700 h-20 w-20 border-transparent rounded-lg shadow dark:shadow-none flex items-center justify-center"
-      >
-        <Supabase />
-      </li>
-    </ul>
-    <p class="mt-6 max-w-prose">This page was pre-rendered at build time</p>
+      <a aria-label="Sky Indicator Lite" href="https://apps.apple.com/us/app/sky-indicator-lite/id6467558483" class="block h-20 w-20">
+        <li
+          class="dark:bg-zinc-800 bg-white border-t dark:border-zinc-700 h-20 w-20 border-transparent rounded-lg shadow dark:shadow-none flex items-center justify-center"
+        >
+          <AppIcon />
+        </li>
+      </a>
 
+    </ul>
+    <p class="mt-6 max-w-prose"></p>
   </main>
 </Base>
