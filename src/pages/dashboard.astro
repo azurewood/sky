@@ -7,7 +7,7 @@ import { type SkyEntry } from "../components/Entries";
 
 const res = await fetch(
   import.meta.env.DEV
-    ? "/api/skyuser.json"
+    ? "http://localhost:4321/api/skyuser.json"
     : "https://sky.azurewood.com/api/skyuser.json",
   {
     method: "POST",
