@@ -8,7 +8,7 @@ import { type SkyEntry } from "../components/Entries";
 const { email, type, name, phone } = Astro.locals;
 // const {data}=(await supabase.from("skyuser").select("type,name,phone"));
 // supabase.auth.getSession().then(data=>console.log(data.data.session?.user.id))
-// console.log(type)
+console.log(type, name, email)
 
 
 const { data } = (await supabase
