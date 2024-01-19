@@ -48,7 +48,7 @@ export const onRequest = defineMiddleware(
         locals.name = user[0].name;
         locals.phone = user[0].phone;
         locals.memo = user[0].memo;
-        // console.log(user,locals.name)
+        console.log(user,locals.name)
       }
 
       cookies.set("sb-access-token", data?.session?.access_token!, {
