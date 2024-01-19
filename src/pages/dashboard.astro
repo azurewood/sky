@@ -5,11 +5,35 @@ import { supabase } from "../lib/supabase";
 import { Reviews } from "../components/Reviews";
 import { type SkyEntry } from "../components/Entries";
 
+const res = await fetch(
+  import.meta.env.DEV
+    ? "http://localhost:4321/api/skyuser"
+    : "https://sky-azurewood.vercel.app/api/skyuser",
+  {
+    method: "POST",
+    headers: {
+      Accept: "application/json, text/plain, */*",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      uid: Astro.locals.uid,
+      token: import.meta.env.SKY_API_TOKEN,
+    }),
+  },
+);
+const user = await res.json();
+if (user.length > 0) {
+  Astro.locals.type = user[0].type;
+  Astro.locals.name = user[0].name;
+  Astro.locals.phone = user[0].phone;
+  Astro.locals.memo = user[0].memo;
+  console.log(user, Astro.locals.name);
+}
+
 const { email, type, name, phone } = Astro.locals;
 // const {data}=(await supabase.from("skyuser").select("type,name,phone"));
 // supabase.auth.getSession().then(data=>console.log(data.data.session?.user.id))
-console.log(type, name, email)
-
+console.log(type, name, email);
 
 const { data } = (await supabase
   .from("skyentry")
@@ -33,13 +57,14 @@ const reviews = await response.json();
     <p class="max-w-prose text-lg mb-2 dark:text-zinc-100">
       This is a protected page. You can only see this if you are logged in.
       <!-- <SkyEntries uid={uid} data={data} client:idle></SkyEntries>   -->
-    {type}{name}{phone}
+      {type}{name}{phone}
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         {
           data.map((entry) => (
             <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
               <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                {entry.type}{entry.owner}
+                {entry.type}
+                {entry.owner}
               </p>
               <p class="mt-1">{entry.content}</p>
             </li>
