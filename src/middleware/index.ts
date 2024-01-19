@@ -31,6 +31,26 @@ export const onRequest = defineMiddleware(
       }
 
       locals.email = data.user?.email!;
+      locals.uid = data.user?.id!;
+      const res = await fetch(import.meta.env.DEV ? "http://localhost:4321/api/skyuser" : "https://sky-azurewood.vercel.app/api/skyuser",
+        {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json, text/plain, */*',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ uid: locals.uid, token: import.meta.env.SKY_API_TOKEN })
+        }
+      );
+      const user = await res.json();
+      if (user.length > 0) {
+        locals.type = user[0].type;
+        locals.name = user[0].name;
+        locals.phone = user[0].phone;
+        locals.memo = user[0].memo;
+        // console.log(user,locals.name)
+      }
+
       cookies.set("sb-access-token", data?.session?.access_token!, {
         sameSite: "strict",
         path: "/",

@@ -1,14 +1,26 @@
 ---
 import Base from "../layout/Base.astro";
 import { supabase } from "../lib/supabase";
-import { Reviews, type GuestbookEntry } from "../components/Reviews";
+// import {type SkyUser, type SkyEntry} from "../components/SkyEntries";
+import { Reviews } from "../components/Reviews";
+import { type SkyEntry } from "../components/Entries";
 
-const { email } = Astro.locals;
+const { email, type, name, phone } = Astro.locals;
+// const {data}=(await supabase.from("skyuser").select("type,name,phone"));
+// supabase.auth.getSession().then(data=>console.log(data.data.session?.user.id))
+// console.log(type)
+
 
 const { data } = (await supabase
-  .from("guestbook")
-  .select("name, message")
-  .order("created_at", { ascending: false })) as { data: GuestbookEntry[] };
+  .from("skyentry")
+  .select("type, content, owner, created_at")
+  .order("created_at", { ascending: false })) as { data: SkyEntry[] };
+const response = await fetch(
+  import.meta.env.DEV
+    ? "http://localhost:4321/api/guestbook"
+    : "https://sky-azurewood.vercel.app/api/guestbook",
+);
+const reviews = await response.json();
 ---
 
 <Base title="Dashboard">
@@ -20,12 +32,26 @@ const { data } = (await supabase
     </p>
     <p class="max-w-prose text-lg mb-2 dark:text-zinc-100">
       This is a protected page. You can only see this if you are logged in.
+      <!-- <SkyEntries uid={uid} data={data} client:idle></SkyEntries>   -->
+    {type}{name}{phone}
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {
+          data.map((entry) => (
+            <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+              <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                {entry.type}{entry.owner}
+              </p>
+              <p class="mt-1">{entry.content}</p>
+            </li>
+          ))
+        }
+      </ul>
     </p>
     <a
       href="/api/auth/signout"
       class="mb-10 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 px-3 py-1 rounded-md"
       >Sign out</a
     >
-    <Reviews reviews={data} client:idle />
+    <Reviews reviews={reviews} client:idle />
   </section>
 </Base>

@@ -9,6 +9,7 @@ import {
 export interface GuestbookEntry {
   name: string;
   message: string;
+  created_at?: string;
 }
 
 const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
@@ -102,7 +103,7 @@ export function Reviews({ reviews }: { reviews: GuestbookEntry[] }) {
             {(review) => (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                  {review.name}
+                  {review.name}{new Date(Date.parse(review.created_at!)).toDateString()}
                 </p>
                 <p class="mt-1">{review.message}</p>
               </li>
