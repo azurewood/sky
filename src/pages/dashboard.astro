@@ -7,8 +7,8 @@ import { type SkyEntry } from "../components/Entries";
 
 const res = await fetch(
   import.meta.env.DEV
-    ? "http://localhost:4321/api/skyuser"
-    : "/api/skyuser",
+    ? "/api/skyuser.json"
+    : "https://sky.azurewood.com/api/skyuser.json",
   {
     method: "POST",
     headers: {
@@ -41,8 +41,8 @@ const { data } = (await supabase
   .order("created_at", { ascending: false })) as { data: SkyEntry[] };
 const response = await fetch(
   import.meta.env.DEV
-    ? "http://localhost:4321/api/guestbook"
-    : "/api/guestbook",
+    ? "http://localhost:4321/api/guestbook.json"
+    : "https://sky.azurewood.com/api/guestbook.json",
 );
 const reviews = await response.json();
 ---

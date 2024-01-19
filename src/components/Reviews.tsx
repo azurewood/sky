@@ -16,12 +16,13 @@ const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
   _,
   { refetching, value },
 ) => {
-  const res = await fetch("/api/guestbook", {
+  const res = await fetch("/api/guestbook.json", {
     method: refetching ? "POST" : "GET",
     body: refetching ? JSON.stringify(refetching) : null,
   });
 
   const data = await res.json();
+  console.log("fetcher",data);
 
   if (!res.ok) {
     throw new Error(data.message);
