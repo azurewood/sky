@@ -5,7 +5,7 @@ import solidJs from "@astrojs/solid-js";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://sky-azurewood.vercel.app",
+  site: "https://sky.azurewood.com",
   output: "server",
   adapter: vercel(),
   integrations: [tailwind(), solidJs()],

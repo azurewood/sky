@@ -23,7 +23,7 @@ export interface SkyEntry {
 
 // async function getUser(uid: string) {
 //   if (uid.trim() === "") return [];
-//   const response = await fetch(import.meta.env.DEV ? "http://localhost:4321/api/skyuser" : "https://sky-azurewood.vercel.app/api/skyuser",
+//   const response = await fetch(import.meta.env.DEV ? "http://localhost:4321/api/skyuser" : "https://sky.azurewood.com/api/skyuser",
 //     {
 //       method: 'POST',
 //       headers: {
