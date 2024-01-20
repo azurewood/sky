@@ -7,7 +7,7 @@ import Entries from "../components/Entries.astro";
 const { data } = (await supabase
   .from("guestbook")
   .select("name, message")
-  .order("created_at", { ascending: false })) as { data: GuestbookEntry[] };
+  .order("created_at", { ascending: false }).limit(30)) as { data: GuestbookEntry[] };
 ---
 
 <Base title="Dashboard">

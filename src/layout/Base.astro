@@ -47,15 +47,24 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
   <body
     class="flex flex-col h-full w-full dark:bg-zinc-900 bg-zinc-50 dark:text-zinc-100"
   >
-    <nav class="border-b bg-white dark:bg-zinc-800 dark:border-zinc-700">
+    <nav
+      class="text-nowrap border-b bg-white dark:bg-zinc-800 dark:border-zinc-700"
+    >
       <div
-        class="flex items-baseline justify-end sm:justify-between p-4 max-w-screen-xl mx-auto"
+        class="flex items-center justify-end sm:justify-between p-4 max-w-screen-xl mx-auto"
       >
-        <a href="/" class="hidden sm:block font-semibold dark:text-white"
-          >Home</a
+        <a
+          href="/"
+          class="text-nowrap w-full block hover:place-items-center font-semibold dark:text-white"
         >
+          <img
+            class="h-auto w-6 invert-0 brightness-150 transition-all duration-300 rounded-lg blur-none hover:invert"
+            src="/hero.png"
+            alt="Azure Fintech"
+          />
+        </a>
         <div>
-          <ul class="font-medium flex items-baseline gap-8">
+          <ul class="text-nowrap font-medium flex items-baseline gap-8">
             <li>
               <a
                 href="/dashboard"
