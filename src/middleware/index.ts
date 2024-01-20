@@ -32,6 +32,8 @@ export const onRequest = defineMiddleware(
 
       locals.email = data.user?.email!;
       locals.uid = data.user?.id!;
+      locals.type = -1;
+
       // const res = await fetch(import.meta.env.DEV ? "http://localhost:4321/api/skyuser" : "https://sky.azurewood.com/api/skyuser",
       //   {
       //     method: 'POST',

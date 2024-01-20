@@ -1,0 +1,31 @@
+---
+import { supabase } from "../lib/supabase";
+import { type SkyEntry } from "../data";
+
+const { data } = (await supabase
+  .from("skyentry")
+  .select("type, content, owner, created_at")
+  .order("created_at", { ascending: false })) as { data: SkyEntry[] };
+---
+
+<main>
+  Entries test {Astro.locals.type}
+
+  {
+    Astro.locals.type > 1 && (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {data.map((entry) => (
+          <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+            <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+              {entry.type}
+              {entry.owner}
+              {entry.content}
+              {new Date(Date.parse(entry.created_at!)).toUTCString()}
+            </p>
+            <p class="mt-1">{entry.content}</p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</main>

@@ -22,7 +22,6 @@ const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
   });
 
   const data = await res.json();
-  console.log("fetcher",data);
 
   if (!res.ok) {
     throw new Error(data.message);

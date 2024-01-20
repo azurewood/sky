@@ -1,50 +1,13 @@
 ---
 import Base from "../layout/Base.astro";
 import { supabase } from "../lib/supabase";
-// import {type SkyUser, type SkyEntry} from "../components/SkyEntries";
-import { Reviews } from "../components/Reviews";
-import { type SkyEntry } from "../components/Entries";
-
-const res = await fetch(
-  import.meta.env.DEV
-    ? "http://localhost:4321/api/skyuser.json"
-    : "https://sky.azurewood.com/api/skyuser.json",
-  {
-    method: "POST",
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      uid: Astro.locals.uid,
-      token: import.meta.env.SKY_API_TOKEN,
-    }),
-  },
-);
-const user = await res.json();
-if (user.length > 0) {
-  Astro.locals.type = user[0].type;
-  Astro.locals.name = user[0].name;
-  Astro.locals.phone = user[0].phone;
-  Astro.locals.memo = user[0].memo;
-  console.log(user, Astro.locals.name);
-}
-
-const { email, type, name, phone } = Astro.locals;
-// const {data}=(await supabase.from("skyuser").select("type,name,phone"));
-// supabase.auth.getSession().then(data=>console.log(data.data.session?.user.id))
-console.log(type, name, email);
+import { Reviews, type GuestbookEntry } from "../components/Reviews";
+import Entries from "../components/Entries.astro";
 
 const { data } = (await supabase
-  .from("skyentry")
-  .select("type, content, owner, created_at")
-  .order("created_at", { ascending: false })) as { data: SkyEntry[] };
-const response = await fetch(
-  import.meta.env.DEV
-    ? "http://localhost:4321/api/guestbook.json"
-    : "https://sky.azurewood.com/api/guestbook.json",
-);
-const reviews = await response.json();
+  .from("guestbook")
+  .select("name, message")
+  .order("created_at", { ascending: false })) as { data: GuestbookEntry[] };
 ---
 
 <Base title="Dashboard">
@@ -52,31 +15,19 @@ const reviews = await response.json();
     <p
       class="max-w-prose text-xl text-indigo-600 dark:text-indigo-400 font-semibold"
     >
-      {email}
+      {Astro.locals.email}
     </p>
     <p class="max-w-prose text-lg mb-2 dark:text-zinc-100">
       This is a protected page. You can only see this if you are logged in.
-      <!-- <SkyEntries uid={uid} data={data} client:idle></SkyEntries>   -->
-      {type}{name}{phone}
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-        {
-          data.map((entry) => (
-            <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
-              <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                {entry.type}
-                {entry.owner}
-              </p>
-              <p class="mt-1">{entry.content}</p>
-            </li>
-          ))
-        }
-      </ul>
+      <Entries></Entries>
+      <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
+      <p />
     </p>
     <a
       href="/api/auth/signout"
       class="mb-10 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 px-3 py-1 rounded-md"
       >Sign out</a
     >
-    <Reviews reviews={reviews} client:idle />
+    <Reviews reviews={data} client:idle />
   </section>
 </Base>

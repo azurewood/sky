@@ -8,4 +8,7 @@ declare namespace App {
     phone: string;
     memo: string;
   }
+
 }
+
+
