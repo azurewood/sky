@@ -10,6 +10,7 @@ export interface GuestbookEntry {
   name: string;
   message: string;
   created_at?: string;
+  UID?: string;
 }
 
 const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
@@ -31,7 +32,7 @@ const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
   return [...data, ...prev];
 };
 
-export function Reviews({ reviews }: { reviews: GuestbookEntry[] }) {
+export function Reviews({ reviews, uid }: { reviews: GuestbookEntry[], uid: string }) {
   const [data, { refetch }] = createResource(fetcher, {
     initialValue: reviews,
     ssrLoadFrom: "initial",
@@ -46,8 +47,10 @@ export function Reviews({ reviews }: { reviews: GuestbookEntry[] }) {
     const name = formData.get("name")?.toString();
     const message = formData.get("message")?.toString();
 
+    // console.log(name, message, uid)
+
     if (!name || !message) return;
-    refetch({ name, message });
+    refetch({ name, message, UID:uid });
     formElement.reset();
   };
 
@@ -103,7 +106,7 @@ export function Reviews({ reviews }: { reviews: GuestbookEntry[] }) {
             {(review) => (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                  {review.name}{new Date(Date.parse(review.created_at!)).toDateString()}
+                  {review.name}&nbsp;<span class="text-xs font-normal text-zinc-600">{new Date(Date.parse(review.created_at!)).toDateString()}</span>
                 </p>
                 <p class="mt-1">{review.message}</p>
               </li>

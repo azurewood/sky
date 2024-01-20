@@ -20,10 +20,10 @@ export const GET: APIRoute = async () => {
 };
 
 export const POST: APIRoute = async ({ request }) => {
-  const { name, message } = await request.json();
+  const { name, message, UID } = await request.json();
   const { data, error } = await supabase
     .from("guestbook")
-    .insert({ name, message })
+    .insert({ name, message, UID })
     .select();
 
   if (error) {

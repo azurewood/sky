@@ -16,7 +16,7 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
     .select("type, name, phone, memo")
     .eq("UID", Astro.locals.uid);
 
-  console.log(data);
+  // console.log(data);
 
   if (data && data.length > 0) {
     Astro.locals.type = data[0]?.type;
