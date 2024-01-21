@@ -74,6 +74,7 @@ export function Reviews({ reviews, uid }: { reviews: GuestbookEntry[], uid: stri
               placeholder="Sam"
               required
               name="name"
+              autocomplete="on"
               class="w-full block rounded-md py-1 px-3 dark:bg-zinc-800 dark:text-zinc-300 border bg-zinc-50 border-zinc-300 dark:border-zinc-700 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-600 dark:focus:bg-zinc-900 focus:bg-white focus:ring-opacity-60"
             />
           </div>

@@ -19,7 +19,6 @@ const { data } = (await supabase
       {Astro.locals.email}
     </p>
     <p class="max-w-prose text-lg mb-2 dark:text-zinc-100">
-      This is a protected page. You can only see this if you are logged in.
       <Entries />
       <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
       <p></p>
@@ -32,3 +31,5 @@ const { data } = (await supabase
     <Reviews reviews={data} uid={Astro.locals.uid} client:idle />
   </section>
 </Base>
+
+

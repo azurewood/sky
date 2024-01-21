@@ -1,30 +1,39 @@
 ---
 import { supabase } from "../lib/supabase";
 import { type SkyEntry } from "../data";
+import { Infobar } from "./Infobar";
 
 const { data } = (await supabase
   .from("skyentry")
   .select("type, content, owner, created_at")
-  .order("created_at", { ascending: false })) as { data: SkyEntry[] };
+  .order("created_at", { ascending: false })
+  .limit(30)) as { data: SkyEntry[] };
 ---
 
 <main>
-  Entries test {Astro.locals.type}
+  <span class="flex justify-center text-sm font-normal text-zinc-400"
+    >{new Date(Date.parse(data[0]?.created_at!)).toUTCString()}</span
+  >
+  <div class="flex justify-center">
+    {data.map((entry) => entry.type === 0 && <Infobar info={entry.owner} />)}
+  </div>
 
   {
     Astro.locals.type > 1 && (
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-        {data.map((entry) => (
-          <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
-            <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-              {entry.type}
-              {entry.owner}
-              {entry.content}
-              {new Date(Date.parse(entry.created_at!)).toUTCString()}
-            </p>
-            <p class="mt-1">{entry.content}</p>
-          </li>
-        ))}
+        {data.map(
+          (entry) =>
+            entry.type > 0 && (
+              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
+                  {entry.type}
+                  {entry.owner}
+                  {new Date(Date.parse(entry.created_at!)).toUTCString()}
+                </p>
+                <p class="mt-1">{entry.content}</p>
+              </li>
+            ),
+        )}
       </ul>
     )
   }

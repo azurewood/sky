@@ -77,7 +77,9 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
               >
             </li>
             <li>
-              <a href="/signin" class="block whitespace-nowrap text-zinc-900 dark:text-gray-200"
+              <a
+                href="/signin"
+                class="block whitespace-nowrap text-zinc-900 dark:text-gray-200"
                 >Sign&nbsp;in</a
               >
             </li>
@@ -88,3 +90,51 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
     <slot />
   </body>
 </html>
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+  
+  body {
+    background-color: black;
+  }
+</style>
+
+<script>
+  function random(min: number, max: number) {
+    return min + Math.random() * (max + 1 - min);
+  }
+
+  const body = document.querySelector("body");
+  // console.log(body);
+  if (body) {
+    const canvasSize = body.offsetWidth * body.offsetHeight;
+    const starsFraction = canvasSize / 4000;
+
+    for (let i = 0; i < starsFraction; i++) {
+      // Set up random elements
+      let xPos = random(0, 100);
+      let yPos = random(0, 100);
+      let alpha = random(0.1, 0.9);
+      let size = random(1, 2);
+      let colour = "#ffffff";
+
+      // Add them to the body
+      const star = document.createElement("div");
+      star.style.position = "fixed";
+      star.style.left = xPos + "%";
+      star.style.top = yPos + "%";
+      star.style.opacity = alpha / 3 + "";
+      // console.log(star.style.opacity)
+      star.style.width = size + "px";
+      star.style.height = size + "px";
+      star.style.backgroundColor = colour;
+      // console.log(star);
+      star.style.filter="blur(1px)";
+      // star.style.webkitFilter="blur(1px)";
+      document.body.appendChild(star);
+    }
+  }
+</script>
