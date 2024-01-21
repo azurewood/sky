@@ -23,14 +23,107 @@ const { data } = (await supabase
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         {data.map(
           (entry) =>
-            entry.type > 0 && (
+            entry.type > 0 &&
+            entry.owner.includes("macd") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
-                <p class="text-sm font-medium text-zinc-500 dark:text-zinc-400">
-                  {entry.type}
+                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+                  ✴️{entry.type}
                   {entry.owner}
-                  {new Date(Date.parse(entry.created_at!)).toUTCString()}
+                  <span class="text-red-500">❓</span>
+                  <span class="text-xs font-normal text-zinc-300">
+                    {new Date(Date.parse(entry.created_at!)).toDateString()}
+                  </span>
                 </p>
-                <p class="mt-1">{entry.content}</p>
+                <p class="mt-1">
+                  {entry.content.slice(
+                    entry.content.indexOf("[") + 1,
+                    entry.content.indexOf("]"),
+                  )}
+                </p>
+              </li>
+            ),
+        )}
+      </ul>
+    )
+  }
+  {
+    Astro.locals.type > 2 && (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {data.map(
+          (entry) =>
+            entry.type > 1 &&
+            entry.owner.includes("sky") && (
+              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+                  ✴️{entry.type}
+                  {entry.owner}
+                  <span class="text-red-500">⁉️</span>
+                  <span class="text-xs font-normal text-zinc-300">
+                    {new Date(Date.parse(entry.created_at!)).toDateString()}
+                  </span>
+                </p>
+                <p class="mt-1">
+                  {entry.content.slice(
+                    entry.content.indexOf("[") + 1,
+                    entry.content.indexOf("]"),
+                  )}
+                </p>
+              </li>
+            ),
+        )}
+      </ul>
+    )
+  }
+  {
+    Astro.locals.type > 3 && (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {data.map(
+          (entry) =>
+            entry.type > 2 &&
+            entry.owner.includes("SKY") && (
+              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+                  ✴️{entry.type}
+                  {entry.owner}
+                  <span class="text-red-500">❣️</span>
+                  <span class="text-xs font-normal text-zinc-300">
+                    {new Date(Date.parse(entry.created_at!)).toDateString()}
+                  </span>
+                </p>
+                <p class="mt-1">
+                  {entry.content.slice(
+                    entry.content.indexOf("[") + 1,
+                    entry.content.indexOf("]"),
+                  )}
+                </p>
+              </li>
+            ),
+        )}
+      </ul>
+    )
+  }
+  {
+    Astro.locals.type > 4 && (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {data.map(
+          (entry) =>
+            entry.type > 2 &&
+            entry.owner.includes("star") && (
+              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+                  ✴️{entry.type}
+                  {entry.owner}
+                  <span class="text-red-500">❣️</span>✨
+                  <span class="text-xs font-normal text-zinc-300">
+                    {new Date(Date.parse(entry.created_at!)).toDateString()}
+                  </span>
+                </p>
+                <p class="mt-1">
+                  {entry.content.slice(
+                    entry.content.indexOf("[") + 1,
+                    entry.content.indexOf("]"),
+                  )}
+                </p>
               </li>
             ),
         )}
