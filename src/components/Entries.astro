@@ -3,6 +3,15 @@ import { supabase } from "../lib/supabase";
 import { type SkyEntry } from "../data";
 import { Infobar } from "./Infobar";
 
+// const now = new Date();
+const formatter = new Intl.DateTimeFormat('zh-CN', {
+  dateStyle: 'full',
+  timeStyle: 'long',
+  timeZone: 'Asia/Shanghai',
+});
+
+// console.log('Intl.DateTimeFormat string: ', formatter.format(now));
+
 const { data } = (await supabase
   .from("skyentry")
   .select("type, content, owner, created_at")
@@ -12,7 +21,7 @@ const { data } = (await supabase
 
 <main>
   <span class="flex justify-center text-sm font-normal text-zinc-400"
-    >{new Date(Date.parse(data[0]?.created_at!)).toLocaleString()}
+    >{formatter.format(new Date(Date.parse(data[0]?.created_at!)))}
   </span>
   <div class="flex justify-center">
     {data.map((entry) => entry.type === 0 && <Infobar info={entry.owner} />)}
