@@ -12,52 +12,24 @@ const { data } = (await supabase
 
 <main>
   <span class="flex justify-center text-sm font-normal text-zinc-400"
-    >{new Date(Date.parse(data[0]?.created_at!)).toUTCString()}</span
-  >
+    >{new Date(Date.parse(data[0]?.created_at!)).toLocaleString()}
+  </span>
   <div class="flex justify-center">
     {data.map((entry) => entry.type === 0 && <Infobar info={entry.owner} />)}
   </div>
 
   {
-    Astro.locals.type > 1 && (
+    Astro.locals.type > 4 && (
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         {data.map(
           (entry) =>
-            entry.type > 0 &&
-            entry.owner.includes("macd") && (
+            entry.type > 2 &&
+            entry.owner.includes("star") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
                   ✴️{entry.type}
                   {entry.owner}
-                  <span class="text-red-500">❓</span>
-                  <span class="text-xs font-normal text-zinc-300">
-                    {new Date(Date.parse(entry.created_at!)).toDateString()}
-                  </span>
-                </p>
-                <p class="mt-1">
-                  {entry.content.slice(
-                    entry.content.indexOf("[") + 1,
-                    entry.content.indexOf("]"),
-                  )}
-                </p>
-              </li>
-            ),
-        )}
-      </ul>
-    )
-  }
-  {
-    Astro.locals.type > 2 && (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
-        {data.map(
-          (entry) =>
-            entry.type > 1 &&
-            entry.owner.includes("sky") && (
-              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
-                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
-                  ✴️{entry.type}
-                  {entry.owner}
-                  <span class="text-red-500">⁉️</span>
+                  <span class="text-red-500">❣️</span>✨
                   <span class="text-xs font-normal text-zinc-300">
                     {new Date(Date.parse(entry.created_at!)).toDateString()}
                   </span>
@@ -103,17 +75,45 @@ const { data } = (await supabase
     )
   }
   {
-    Astro.locals.type > 4 && (
+    Astro.locals.type > 2 && (
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
         {data.map(
           (entry) =>
-            entry.type > 2 &&
-            entry.owner.includes("star") && (
+            entry.type > 1 &&
+            entry.owner.includes("sky") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
                   ✴️{entry.type}
                   {entry.owner}
-                  <span class="text-red-500">❣️</span>✨
+                  <span class="text-red-500">⁉️</span>
+                  <span class="text-xs font-normal text-zinc-300">
+                    {new Date(Date.parse(entry.created_at!)).toDateString()}
+                  </span>
+                </p>
+                <p class="mt-1">
+                  {entry.content.slice(
+                    entry.content.indexOf("[") + 1,
+                    entry.content.indexOf("]"),
+                  )}
+                </p>
+              </li>
+            ),
+        )}
+      </ul>
+    )
+  }
+  {
+    Astro.locals.type > 1 && (
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+        {data.map(
+          (entry) =>
+            entry.type > 0 &&
+            entry.owner.includes("macd") && (
+              <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
+                <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+                  ✴️{entry.type}
+                  {entry.owner}
+                  <span class="text-red-500">❓</span>
                   <span class="text-xs font-normal text-zinc-300">
                     {new Date(Date.parse(entry.created_at!)).toDateString()}
                   </span>
