@@ -4,10 +4,10 @@ import { type SkyEntry } from "../data";
 import { Infobar } from "./Infobar";
 
 // const now = new Date();
-const formatter = new Intl.DateTimeFormat('zh-CN', {
-  dateStyle: 'full',
-  timeStyle: 'long',
-  timeZone: 'Asia/Shanghai',
+const formatter = new Intl.DateTimeFormat("zh-CN", {
+  dateStyle: "full",
+  timeStyle: "long",
+  timeZone: "Asia/Shanghai",
 });
 
 // console.log('Intl.DateTimeFormat string: ', formatter.format(now));
@@ -117,6 +117,8 @@ const { data } = (await supabase
         {data.map(
           (entry) =>
             entry.type > 0 &&
+            (Astro.locals.type < 3 || entry.type > 32) &&
+            (entry.type < 64 || Astro.locals.type > 2) &&
             entry.owner.includes("macd") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
