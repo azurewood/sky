@@ -143,8 +143,18 @@ const { data } = (await supabase
   }
   {
     Astro.locals.type < 2 && (
-      <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
-        初级用户试用数据服务，请通过微信Azuretrading或者邮件联系wood.azure@gmail.com
+      <p class="flex flex-col text-center justify-center pt-3 text-sm font-medium text-zinc-400 dark:text-zinc-400">
+        <span>用户试用数据服务，请通过微信和邮件联系</span>
+        <div class="flex flex-col justify-center items-center">
+          <img
+            class="h-auto w-32 brightness-100 rounded-lg blur-none hover:blur-sm"
+            src="/wechat.jpg"
+            alt="Azuretrading"
+          />
+          <span class="text-indigo-600 dark:text-indigo-400">
+            wood.azure@gmail.com
+          </span>
+        </div>
       </p>
     )
   }
