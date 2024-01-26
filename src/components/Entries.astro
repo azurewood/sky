@@ -141,4 +141,11 @@ const { data } = (await supabase
       </ul>
     )
   }
+  {
+    Astro.locals.type < 2 && (
+      <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
+        初级用户试用数据服务，请通过微信Azuretrading或者邮件联系wood.azure@gmail.com
+      </p>
+    )
+  }
 </main>
