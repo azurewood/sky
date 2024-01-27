@@ -2,6 +2,7 @@
 import { supabase } from "../lib/supabase";
 import { type SkyEntry } from "../data";
 import { Infobar } from "./Infobar";
+import Badge from "../components/Badge";
 
 // const now = new Date();
 const formatter = new Intl.DateTimeFormat("zh-CN", {
@@ -19,7 +20,8 @@ const { data } = (await supabase
   .limit(30)) as { data: SkyEntry[] };
 ---
 
-<main>
+<main class="mt-2">
+  <Badge type={Astro.locals.type} />
   <span class="flex justify-center text-sm font-normal text-zinc-400"
     >{formatter.format(new Date(Date.parse(data[0]?.created_at!)))}
   </span>
@@ -29,7 +31,7 @@ const { data } = (await supabase
 
   {
     Astro.locals.type > 4 && (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
             entry.type > 2 &&
@@ -57,7 +59,7 @@ const { data } = (await supabase
   }
   {
     Astro.locals.type > 3 && (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
             entry.type > 2 &&
@@ -85,7 +87,7 @@ const { data } = (await supabase
   }
   {
     Astro.locals.type > 2 && (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
             entry.type > 1 &&
@@ -113,7 +115,7 @@ const { data } = (await supabase
   }
   {
     Astro.locals.type > 1 && (
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
             entry.type > 0 &&
