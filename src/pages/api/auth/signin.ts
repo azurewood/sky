@@ -14,8 +14,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
       provider: provider as Provider,
       options: {
         redirectTo: import.meta.env.DEV
-          ? "http://localhost:4321/api/auth/callback"
-          : "https://sky.azurewood.com/api/auth/callback",
+          ? "http://localhost:4321/api/auth/callback.json"
+          : "/api/auth/callback.json",
       },
     });
 

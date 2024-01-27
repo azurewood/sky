@@ -91,16 +91,16 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
   </body>
 </html>
 
-<style>
+<!-- <style>
   html,
   body {
     height: 100%;
   }
-  
+
   body {
     background-color: black;
   }
-</style>
+</style> -->
 
 <script>
   function random(min: number, max: number) {
@@ -132,7 +132,7 @@ if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
       star.style.height = size + "px";
       star.style.backgroundColor = colour;
       // console.log(star);
-      star.style.filter="blur(1px)";
+      star.style.filter = "blur(1px)";
       // star.style.webkitFilter="blur(1px)";
       document.body.appendChild(star);
     }
