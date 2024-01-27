@@ -17,7 +17,7 @@ after:dark:bg-blue-900 after:-z-10 after:scale-90 after:translate-x-1">
 
                 }
                 {
-                    [...Array(n)].map((_,) => <span class="text-neutral-500">✮</span>)
+                    [...Array(n)].map((_,) => <span class="text-slate-600">✮</span>)
 
                 }
             </p>
