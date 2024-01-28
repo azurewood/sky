@@ -13,11 +13,11 @@ const { data } = (await supabase
 
 <Base title="Dashboard">
   <section class="py-16 px-4 w-full flex flex-col items-center gap-2">
-    <div
+    <span
       class="flex justify-center gap-x-2 max-w-prose text-xl no-underline text-indigo-600 dark:text-indigo-400 font-semibold"
     >
       {Astro.locals.email}
-    </div>
+    </span>
     <div class="max-w-prose text-lg mb-2 dark:text-zinc-100">
       <Entries />
       <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
