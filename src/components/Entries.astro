@@ -63,7 +63,7 @@ const { data } = (await supabase
         {data.map(
           (entry) =>
             entry.type > 2 &&
-            entry.owner.includes("SKY") && (
+            (entry.owner.includes("*sky") || entry.owner.includes("SKY")) && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
                   ✴️{entry.type}
@@ -91,7 +91,8 @@ const { data } = (await supabase
         {data.map(
           (entry) =>
             entry.type > 1 &&
-            entry.owner.includes("sky") && (
+            entry.owner.includes("sky") &&
+            !entry.owner.includes("*sky") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
                   ✴️{entry.type}
