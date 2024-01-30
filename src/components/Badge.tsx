@@ -13,11 +13,11 @@ const Badge = ({ type }: { type: number }) => {
 after:content-[''] after:absolute after:top-0 after:right-0 after:h-3 after:w-3 after:bg-blue-100 after:rotate-45 after:align-baseline after:translate-y-0.5
 after:dark:bg-blue-900 after:-z-10 after:scale-90 after:translate-x-1">
                 {
-                    [...Array(type > 0 ? type : 0)].map((_,) => <span class="text-amber-300 text-center text-sm">✮</span>)
+                    [...Array(type > 0 ? type : 0)].map((_,) => <span class="text-amber-300 inline-block align-middle text-base">✮</span>)
 
                 }
                 {
-                    [...Array(n)].map((_,) => <span class="text-slate-600 text-center text-sm">✮</span>)
+                    [...Array(n)].map((_,) => <span class="text-slate-600 inline-block align-middle text-base">✮</span>)
 
                 }
             </p>
