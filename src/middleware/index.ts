@@ -32,7 +32,24 @@ export const onRequest = defineMiddleware(
 
       locals.email = data.user?.email!;
       locals.uid = data.user?.id!;
-      locals.type = -1;
+      // locals.type = -1;
+
+      // console.log(locals.uid, locals.type)
+      if (locals.uid && locals.uid.length > 0 && locals.type === undefined) {
+        const { data } = await supabase
+          .from("skyuser")
+          .select("type, name, phone, memo")
+          .eq("UID", locals.uid);
+
+        // console.log(data);
+
+        if (data && data.length > 0) {
+          locals.type = data[0]?.type;
+          locals.name = data[0]?.name;
+          locals.phone = data[0]?.phone;
+          locals.memo = data[0]?.memo;
+        }
+      }
 
       // const res = await fetch(import.meta.env.DEV ? "http://localhost:4321/api/skyuser" : "https://sky.azurewood.com/api/skyuser",
       //   {

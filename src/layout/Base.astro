@@ -3,28 +3,28 @@ interface Props {
   title: string;
 }
 
-import { supabase } from "../lib/supabase";
+// import { supabase } from "../lib/supabase";
 
 const description = "Sky for China stock market";
 const { title } = Astro.props;
 const ogImageURL = new URL("hero.png", Astro.site).href;
 const canonicalURL = new URL(Astro.url).href;
 
-if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
-  const { data } = await supabase
-    .from("skyuser")
-    .select("type, name, phone, memo")
-    .eq("UID", Astro.locals.uid);
+// if (Astro.locals.uid && Astro.locals.uid.length > 0 && Astro.locals.type < 0) {
+//   const { data } = await supabase
+//     .from("skyuser")
+//     .select("type, name, phone, memo")
+//     .eq("UID", Astro.locals.uid);
 
-  // console.log(data);
+//   // console.log(data);
 
-  if (data && data.length > 0) {
-    Astro.locals.type = data[0]?.type;
-    Astro.locals.name = data[0]?.name;
-    Astro.locals.phone = data[0]?.phone;
-    Astro.locals.memo = data[0]?.memo;
-  }
-}
+//   if (data && data.length > 0) {
+//     Astro.locals.type = data[0]?.type;
+//     Astro.locals.name = data[0]?.name;
+//     Astro.locals.phone = data[0]?.phone;
+//     Astro.locals.memo = data[0]?.memo;
+//   }
+// }
 ---
 
 <html lang="en" class="h-full w-full">
