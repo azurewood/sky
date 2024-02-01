@@ -34,7 +34,7 @@ const { data } = (await supabase
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
-            entry.type > 2 &&
+            entry.type > 0 &&
             entry.owner.includes("star") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
@@ -62,7 +62,7 @@ const { data } = (await supabase
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
-            entry.type > 2 &&
+            entry.type > 0 &&
             (entry.owner.includes("*sky") || entry.owner.includes("SKY")) && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
@@ -90,7 +90,7 @@ const { data } = (await supabase
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-2">
         {data.map(
           (entry) =>
-            entry.type > 1 &&
+            entry.type > 0 &&
             entry.owner.includes("sky") &&
             !entry.owner.includes("*sky") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
