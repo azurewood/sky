@@ -3,6 +3,7 @@ import { supabase } from "../lib/supabase";
 import { type SkyEntry } from "../data";
 import { Infobar } from "./Infobar";
 import Badge from "../components/Badge";
+import { createSignal } from "solid-js";
 
 // const now = new Date();
 const formatter = new Intl.DateTimeFormat("zh-CN", {
@@ -18,6 +19,8 @@ const { data } = (await supabase
   .select("type, content, owner, created_at")
   .order("created_at", { ascending: false })
   .limit(30)) as { data: SkyEntry[] };
+
+const [count, setCount] = createSignal(0);
 ---
 
 <main class="mt-2">
@@ -51,6 +54,7 @@ const { data } = (await supabase
                     entry.content.indexOf("]"),
                   )}
                 </p>
+                {setCount((c) => c + 1)}
               </li>
             ),
         )}
@@ -79,6 +83,7 @@ const { data } = (await supabase
                     entry.content.indexOf("]"),
                   )}
                 </p>
+                {setCount((c) => c + 1)}
               </li>
             ),
         )}
@@ -108,6 +113,7 @@ const { data } = (await supabase
                     entry.content.indexOf("]"),
                   )}
                 </p>
+                {setCount((c) => c + 1)}
               </li>
             ),
         )}
@@ -121,7 +127,8 @@ const { data } = (await supabase
           (entry) =>
             entry.type > 0 &&
             (Astro.locals.type < 3 || entry.type > 32) &&
-            (entry.type < 64 || Astro.locals.type > 2) &&
+            (entry.type < 64 ||
+              (Astro.locals.type > 2 && Astro.locals.type < 5)) &&
             entry.owner.includes("macd") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
@@ -138,10 +145,20 @@ const { data } = (await supabase
                     entry.content.indexOf("]"),
                   )}
                 </p>
+                {setCount((c) => c + 1)}
               </li>
             ),
         )}
       </ul>
+    )
+  }
+  {
+    count() > 0 ? (
+      <></>
+    ) : (
+      <p class="flex flex-row text-center justify-center">
+        <span>今天没有数据</span>
+      </p>
     )
   }
   {
