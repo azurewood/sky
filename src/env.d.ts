@@ -6,7 +6,7 @@ declare namespace App {
     type: number;
     name: string;
     phone: string;
-    memo: string;
+    admin: boolean;
   }
 
 }

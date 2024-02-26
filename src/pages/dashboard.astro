@@ -3,6 +3,7 @@ import Base from "../layout/Base.astro";
 import { supabase } from "../lib/supabase";
 import { Reviews, type GuestbookEntry } from "../components/Reviews";
 import Entries from "../components/Entries.astro";
+import CustomerTalk from "../components/CustomerTalk";
 
 const { data } = (await supabase
   .from("guestbook")
@@ -12,24 +13,33 @@ const { data } = (await supabase
 ---
 
 <Base title="Dashboard">
-  <section class="py-16 px-4 w-full flex flex-col items-center gap-2">
-    <span
-      class="flex justify-center gap-x-2 max-w-prose text-xl no-underline text-indigo-600 dark:text-indigo-400 font-semibold"
-    >
-      {Astro.locals.email}
-    </span>
-    <div class="max-w-prose text-lg mb-2 dark:text-zinc-100">
-      <Entries />
-      <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
-      <p></p>
+  <div class="relative">
+    <section class="py-16 px-4 w-full flex flex-col items-center gap-2">
+      <span
+        class="flex justify-center gap-x-2 max-w-prose text-xl no-underline text-indigo-600 dark:text-indigo-400 font-semibold"
+      >
+        {Astro.locals.email}
+      </span>
+      <div class="max-w-prose text-lg mb-2 dark:text-zinc-100">
+        <Entries/>
+        <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
+        <p></p>
+      </div>
+      <a
+        href="/api/auth/signout"
+        class="mb-10 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 px-3 py-1 rounded-md"
+        >Sign out</a
+      >
+      <Reviews reviews={data} uid={Astro.locals.uid} client:idle />
+    </section>
+    <div class="fixed bottom-0 right-0 p-10 flex flex-col">
+      
+      <div class="flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
+        <p class="self-center px-3"><strong>Info</strong>This is Info alert.{Astro.locals.admin}</p>
+        <button class="px-3" onclick="javascript:void(0);"><strong class="text-xl align-center cursor-pointer alert-del">&times;</strong></button>
+      </div>
+      <CustomerTalk client:idle from={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN}></CustomerTalk>
     </div>
-    <a
-      href="/api/auth/signout"
-      class="mb-10 bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 px-3 py-1 rounded-md"
-      >Sign out</a
-    >
-    <Reviews reviews={data} uid={Astro.locals.uid} client:idle />
-  </section>
+  </div>
 </Base>
-
-
+../components/CustomerTalk.tsx

@@ -47,7 +47,8 @@ export const onRequest = defineMiddleware(
           locals.type = data[0]?.type;
           locals.name = data[0]?.name;
           locals.phone = data[0]?.phone;
-          locals.memo = data[0]?.memo;
+          locals.admin = (locals.email === import.meta.env.ADMIN_ACCOUNT || locals.uid === import.meta.env.ADMIN_UID);
+          //locals.memo = data[0]?.memo;
         }
       }
 
