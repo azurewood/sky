@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabase";
 import { Reviews, type GuestbookEntry } from "../components/Reviews";
 import Entries from "../components/Entries.astro";
 import CustomerTalk from "../components/CustomerTalk";
+import MessageBox from "../components/MessageBox";
 
 const { data } = (await supabase
   .from("guestbook")
@@ -38,6 +39,7 @@ const { data } = (await supabase
         <p class="self-center px-3"><strong>Info</strong>This is Info alert.{Astro.locals.admin}</p>
         <button class="px-3" onclick="javascript:void(0);"><strong class="text-xl align-center cursor-pointer alert-del">&times;</strong></button>
       </div>
+      <MessageBox client:idle uid={Astro.locals.uid}></MessageBox>
       <CustomerTalk client:idle from={Astro.locals.uid}></CustomerTalk>
     </div>
   </div>
