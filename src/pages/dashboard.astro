@@ -32,7 +32,7 @@ const { data } = (await supabase
       >
       <Reviews reviews={data} uid={Astro.locals.uid} client:idle />
     </section>
-    <div class="fixed bottom-0 right-0 py-10 flex flex-col">
+    <div class="fixed md:sticky bottom-0 right-0 py-10 flex flex-col">
       
       <div class="flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
         <p class="self-center px-3"><strong>Info</strong>This is Info alert.{Astro.locals.admin}</p>
