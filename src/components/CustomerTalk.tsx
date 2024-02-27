@@ -65,7 +65,7 @@ const CustomerTalk = ({ from }: { from: string }) => {
                 name="from"
                 value={from}></input> */}
             </div>
-            <button class="hover:border hover:shadow-lg transform active:translate-y-px active:translate-x-px transition-transform"><strong>OK</strong></button>
+            <button class="w-32 self-center border shadow active:translate-y-px active:translate-x-px"><strong>OK</strong></button>
             {response() && <p class="text-red-700">{response()}</p>}
           </div>
         </form> : <></>}
@@ -74,12 +74,12 @@ const CustomerTalk = ({ from }: { from: string }) => {
 
       {open() ?
         <div>
-          <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer hover:shadow-lg">&times;</strong></button>
+          <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer">&times;</strong></button>
           <div></div>
         </div>
         :
         <div>
-          <button class="px-3" onClick={handleOpen}><strong class="text-2xl cursor-pointer hover:shadow-lg">&boxbox;</strong></button>
+          <button class="px-3" onClick={handleOpen}><strong class="text-2xl cursor-pointer">&boxbox;</strong></button>
           <div></div>
         </div>}
 
