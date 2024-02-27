@@ -50,7 +50,7 @@ const CustomerTalk = ({ from }: { from: string }) => {
   return (
     <div class="flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
       <div class="flex flex-col flex-grow px-3 gap-y-1">
-        <p class="self-center mb-1"><a href="#" onClick={handleOpen}><strong>Talk to Sky</strong></a></p>
+        <p class="self-center mb-1 text-lg"><a href="#" onClick={handleOpen}>Talk to Sky</a></p>
 
         {open() ? <form onSubmit={onSubmit}>
           <div class="md:w-96 flex flex-col">
@@ -65,7 +65,7 @@ const CustomerTalk = ({ from }: { from: string }) => {
                 name="from"
                 value={from}></input> */}
             </div>
-            <button>OK</button>
+            <button class="hover:border hover:shadow-lg transform active:translate-y-px active:translate-x-px transition-transform"><strong>OK</strong></button>
             {response() && <p class="text-red-700">{response()}</p>}
           </div>
         </form> : <></>}
@@ -74,12 +74,12 @@ const CustomerTalk = ({ from }: { from: string }) => {
 
       {open() ?
         <div>
-          <button class="px-3" onClick={handleClose}><strong class="text-xl align-center cursor-pointer alert-del">&times;</strong></button>
+          <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer hover:shadow-lg">&times;</strong></button>
           <div></div>
         </div>
         :
         <div>
-          <button class="px-3" onClick={handleOpen}><strong class="text-xl align-center cursor-pointer alert-del">&boxbox;</strong></button>
+          <button class="px-3" onClick={handleOpen}><strong class="text-2xl cursor-pointer hover:shadow-lg">&boxbox;</strong></button>
           <div></div>
         </div>}
 
