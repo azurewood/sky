@@ -27,10 +27,10 @@ export const POST: APIRoute = async ({ request }) => {
     // const content  = formData.get("content");
     // const token  = request.headers.get("Cookie");
     // console.log(from,content,token)
-    const { from, content, token } = await request.json();
+    const { from, content } = await request.json();
 
-    if (token === undefined ||
-        token !== import.meta.env.SKY_API_TOKEN ||
+    if (//token === undefined ||
+        //token !== import.meta.env.SKY_API_TOKEN ||
         content === undefined || from === undefined) {
         return new Response(
             JSON.stringify({

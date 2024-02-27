@@ -1,7 +1,7 @@
 import { createSignal, type JSX } from "solid-js";
 
 
-const CustomerTalk = ({ from, token }: { from: string, token: string }) => {
+const CustomerTalk = ({ from }: { from: string }) => {
   const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
@@ -32,7 +32,7 @@ const CustomerTalk = ({ from, token }: { from: string, token: string }) => {
     }
     const response = await fetch("/api/message.json", {
       method: "POST",
-      body: JSON.stringify({ from, content, token }), //formData,
+      body: JSON.stringify({ from, content }), //formData,
     });
     // console.log(response)
     const data = await response.json();
@@ -53,10 +53,10 @@ const CustomerTalk = ({ from, token }: { from: string, token: string }) => {
         <p class="self-center mb-1"><a href="#" onClick={handleOpen}><strong>Talk to Sky</strong></a></p>
 
         {open() ? <form onSubmit={onSubmit}>
-          <div class="w-96 flex flex-col">
+          <div class="w-72 flex flex-col">
             <div class="relative w-full min-w-[200px]">
               <textarea placeholder="" name="content" onKeyUp={keyUpHandler} value={content()}
-                class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
+                class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
               <label
                 class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
                 Message
