@@ -30,7 +30,7 @@ const CustomerTalk = ({ from }: { from: string }) => {
       setResponse("Message is too short!");
       return;
     }
-    const response = await fetch("/api/message.json", {
+    const response = await fetch(`/api/message.json?uid=${from}`, {
       method: "POST",
       body: JSON.stringify({ from, content }), //formData,
     });

@@ -11,10 +11,10 @@ export const PUT: APIRoute = async ({ request }) => {
     // console.log(from,content,token)
     const { id } = await request.json();
 
-    const token = request.headers.get("Cookie");
-    //const uid = new URL(request.url).searchParams.get("uid");
-    // console.log(token)
-    if (!token || !id) {
+    //const token = request.headers.get("Cookie");
+    const uid = new URL(request.url).searchParams.get("uid");
+    // console.log(uid)
+    if (!uid || uid === undefined || !uid || uid === undefined) {
         return new Response(
             JSON.stringify({
                 error: "Not supported!",
@@ -22,14 +22,16 @@ export const PUT: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let cookie: string = "";
-    await supabase.auth.getSession().then(data => {
-        cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
+    let user_id: string | undefined = "";
+    await supabase.auth.getUser().then(data => {
+        user_id = data.data.user?.id;
+        //console.log(data.data.user?.id, uid);
+        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
         // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
     });
 
-    // console.log(cookie.length,token.length)
-    if (cookie === token) {
+    // console.log(cookie, token)
+    if (uid === user_id) {
         // console.log(id)
 
         const { data, error } = await supabase
@@ -61,10 +63,10 @@ export const PUT: APIRoute = async ({ request }) => {
 };
 
 export const GET: APIRoute = async ({ request }) => {
-    const token = request.headers.get("Cookie");
+    //const token = request.headers.get("Cookie");
     const uid = new URL(request.url).searchParams.get("uid");
     // console.log(uid)
-    if (!token || !uid || uid == undefined) {
+    if (!uid || uid == undefined) {
         return new Response(
             JSON.stringify({
                 error: "Not supported!",
@@ -72,14 +74,16 @@ export const GET: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let cookie: string = "";
-    await supabase.auth.getSession().then(data => {
-        cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
+    let user_id: string | undefined = "";
+    await supabase.auth.getUser().then(data => {
+        user_id = data.data.user?.id;
+        //console.log(data.data.user?.id, uid);
+        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
         // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
     });
 
-    // console.log(cookie.length,token.length)
-    if (cookie === token) {
+    // console.log(cookie, token)
+    if (uid === user_id) {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")
@@ -119,10 +123,10 @@ export const POST: APIRoute = async ({ request }) => {
     // console.log(from,content,token)
     const { from, content } = await request.json();
 
-    const token = request.headers.get("Cookie");
-    // const uid = new URL(request.url).searchParams.get("uid");
-    // console.log(token)
-    if (!token || content === undefined || from === undefined) {
+    //const token = request.headers.get("Cookie");
+    const uid = new URL(request.url).searchParams.get("uid");
+    // console.log(uid)
+    if (!uid || uid === undefined) {
         return new Response(
             JSON.stringify({
                 error: "Not supported!",
@@ -130,14 +134,16 @@ export const POST: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let cookie: string = "";
-    await supabase.auth.getSession().then(data => {
-        cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
+    let user_id: string | undefined = "";
+    await supabase.auth.getUser().then(data => {
+        user_id = data.data.user?.id;
+        //console.log(data.data.user?.id, uid);
+        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
         // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
     });
 
-    // console.log(cookie.length,token.length)
-    if (cookie === token) {
+    // console.log(cookie, token)
+    if (uid === user_id) {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")

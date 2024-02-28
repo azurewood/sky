@@ -1,12 +1,12 @@
 import { createSignal, onCleanup, For } from "solid-js";
-import  {type Message} from "./MessageItem";
+import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
 
 const MessageBox = ({ uid }: { uid: string }) => {
     // const [count, setCount] = createSignal(0);
     const [messages, setMessages] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
-    const [selection,setSelection]=createSignal("");
+    const [selection, setSelection] = createSignal("");
 
     const getMessages = async () => {
         setLoading(true)
@@ -22,7 +22,7 @@ const MessageBox = ({ uid }: { uid: string }) => {
 
     onCleanup(() => { clearInterval(timer) });
 
-   
+
 
     return (
         <ul class="md:w-96">

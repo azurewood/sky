@@ -17,7 +17,7 @@ const MessageItem = ({ message, setSelection, selection }: { message: Message, s
     const handleClose = async (_: any) => {
         setVisible(false);
         // console.log("xxx");
-        const response = await fetch("/api/message.json", {
+        const response = await fetch(`/api/message.json?uid=${message.owner}`, {
             method: "PUT", //"DELETE",
             body: JSON.stringify({ id: message.id }), //formData,
         });
