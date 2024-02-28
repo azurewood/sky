@@ -38,7 +38,7 @@ const [count, setCount] = createSignal(0);
         {data.map(
           (entry) =>
             entry.type > 0 &&
-            entry.owner.includes("star") && (
+            entry.owner.includes("star") && !entry.owner.includes("?") && (
               <li class="p-4 border rounded-md bg-white dark:bg-zinc-800 dark:border-zinc-700">
                 <p class="text-sm font-medium text-zinc-400 dark:text-zinc-400">
                   ✴️{entry.type}
