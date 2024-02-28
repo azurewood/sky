@@ -5,11 +5,13 @@ import MessageItem from "./MessageItem";
 const MessageBox = ({ uid }: { uid: string }) => {
     // const [count, setCount] = createSignal(0);
     const [messages, setMessages] = createSignal<Message[]>([]);
+    const [backup, setBackup] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
     const [selection, setSelection] = createSignal("");
 
     const getMessages = async () => {
-        setLoading(true)
+        setLoading(true);
+        setBackup(messages());
         const res = await fetch(`/api/message.json?uid=${uid}`);
         const data = await res.json();
 
@@ -22,6 +24,9 @@ const MessageBox = ({ uid }: { uid: string }) => {
 
     onCleanup(() => { clearInterval(timer) });
 
+    const found = (message: Message) => {
+        return backup().findIndex(a => message.id === a.id);
+    }
 
 
     return (
@@ -34,12 +39,16 @@ const MessageBox = ({ uid }: { uid: string }) => {
                                 <p class="self-center px-3"><strong>Info</strong>{message.content}</p>
                                 <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
                             </div> */}
-                            <MessageItem message={message} setSelection={setSelection} selection={selection}></MessageItem>
+                            <MessageItem fresh={found(message) < 0 ? true : false} message={message} setSelection={setSelection} selection={selection}></MessageItem>
 
                         </li>
                     )
                 }
             </For>
+            {loading() ?
+                <div class='h-1 w-full bg-pink-100 overflow-hidden'>
+                    <div class='animate-pulse w-full h-full bg-pink-500 origin-left-right'></div>
+                </div> : <div class='h-1 w-full bg-opacity-5 overflow-hidden'></div>}
         </ul>
     )
 }
