@@ -36,7 +36,7 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
     return (
         <div onClick={handleClick} class={"flex justify-between text-blue-100 shadow-inner rounded px-0 py-3 transform duration-1000 transition-transform " +
             (selection() === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
-            (ready() ? "scale-y-100" : (fresh ? "scale-y-90" : "scale-y-100")) + " " +
+            (ready() ? "scale-y-100" : (fresh ? "scale-y-75" : "scale-y-100")) + " " +
             (fresh ? "bg-opacity-95" : "") + " " + (visible() ? 'block' : 'hidden')}>
             <p class="self-center px-3"><strong>Info</strong>{message.content}</p>
             <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
