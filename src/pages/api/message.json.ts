@@ -22,16 +22,13 @@ export const PUT: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let user_id: string | undefined = "";
-    await supabase.auth.getUser().then(data => {
-        user_id = data.data.user?.id;
-        //console.log(data.data.user?.id, uid);
-        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
-        // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
-    });
+    const { data, error } = await supabase
+        .from("skyuser")
+        .select("*")
+        .eq("UID", uid);
 
     // console.log(cookie, token)
-    if (uid === user_id) {
+    if (!error && data.length > 0) {
         // console.log(id)
 
         const { data, error } = await supabase
@@ -74,17 +71,13 @@ export const GET: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let user_id: string | undefined = "";
-    await supabase.auth.getUser().then(data => {
-        user_id = data.data.user?.id;
-        //console.log(data.data.user?.id, uid);
-        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
-        // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
-    });
+    const { data, error } = await supabase
+        .from("skyuser")
+        .select("*")
+        .eq("UID", uid);
 
-    // console.log(cookie, token)
-    if (uid === user_id) {
-        // console.log(cookie);
+    // console.log(data)
+    if (!error && data.length > 0) {
         const { data, error } = await supabase
             .from("message")
             .select("*")
@@ -134,16 +127,13 @@ export const POST: APIRoute = async ({ request }) => {
             { status: 500 },
         );
     }
-    let user_id: string | undefined = "";
-    await supabase.auth.getUser().then(data => {
-        user_id = data.data.user?.id;
-        //console.log(data.data.user?.id, uid);
-        //cookie = "sb-access-token=" + data.data.session?.access_token + "; sb-refresh-token=" + data.data.session?.refresh_token;
-        // console.log(data.data.session?.refresh_token, data.data.session?.access_token)
-    });
+    const { data, error } = await supabase
+        .from("skyuser")
+        .select("*")
+        .eq("UID", uid);
 
-    // console.log(cookie, token)
-    if (uid === user_id) {
+    // console.log(data)
+    if (!error && data.length > 0) {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")
