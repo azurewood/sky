@@ -48,12 +48,12 @@ const CustomerTalk = ({ from }: { from: string }) => {
   }
 
   return (
-    <div class="flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
+    <div class="md:w-96 flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
       <div class="flex flex-col flex-grow px-3 gap-y-1">
         <p class="self-center mb-1 text-lg"><a href="#" onClick={handleOpen}>Talk to Sky</a></p>
 
         {open() ? <form onSubmit={onSubmit}>
-          <div class="md:w-96 flex flex-col">
+          <div class="flex flex-col">
             <div class="relative w-full min-w-[200px]">
               <textarea placeholder="" name="content" id="content" onKeyUp={keyUpHandler} value={content()}
                 class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>

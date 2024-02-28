@@ -25,7 +25,7 @@ const MessageBox = ({ uid }: { uid: string }) => {
    
 
     return (
-        <ul>
+        <ul class="md:w-96">
             <For each={messages()}>
                 {
                     (message) => (
