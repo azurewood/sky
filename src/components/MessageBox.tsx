@@ -15,9 +15,11 @@ const MessageBox = ({ uid }: { uid: string }) => {
         const res = await fetch(`/api/message.json?uid=${uid}`);
         const data = await res.json();
 
-        if (!data.error)
+        if (!data.error) {
             setMessages(data);
-        setLoading(false);
+            setLoading(false);
+        }
+
     }
 
     const timer = setInterval(getMessages, 15000);

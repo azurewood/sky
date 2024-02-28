@@ -65,7 +65,7 @@ const CustomerTalk = ({ from }: { from: string }) => {
                 name="from"
                 value={from}></input> */}
             </div>
-            <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-md mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">OK</button>
+            <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-md mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">Send</button>
             {response() && <p class="text-red-700">{response()}</p>}
           </div>
         </form> : <></>}
