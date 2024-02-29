@@ -9,7 +9,7 @@ export interface Message {
     read: boolean;
 }
 
-const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boolean, message: Message, setSelection: Setter<string>, selection: Accessor<string> }) => {
+const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
 
@@ -29,13 +29,13 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
     }
     const handleClick = (_: any) => {
         // console.log(message.id)
-        setSelection(message.id);
+        setSelection({ id: message.id, uid: message.from });
     }
 
 
     return (
         <div onClick={handleClick} class={"flex justify-between text-blue-100 shadow-inner rounded px-0 py-3 transform duration-1000 transition-transform " +
-            (selection() === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
+            (selection()?.id === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
             (ready() ? "scale-y-100" : (fresh ? "scale-y-75" : "scale-y-100")) + " " +
             (fresh ? "bg-opacity-95" : "") + " " + (visible() ? 'block' : 'hidden')}>
             <p class="self-center px-3"><strong>Info</strong>{message.content}</p>

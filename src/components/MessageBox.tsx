@@ -1,13 +1,13 @@
-import { createSignal, onCleanup, For } from "solid-js";
+import { createSignal, onCleanup, For, type Setter, type Accessor } from "solid-js";
 import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
 
-const MessageBox = ({ uid }: { uid: string }) => {
+const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     // const [count, setCount] = createSignal(0);
     const [messages, setMessages] = createSignal<Message[]>([]);
     const [backup, setBackup] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
-    const [selection, setSelection] = createSignal("");
+    // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
 
     const getMessages = async () => {
         setLoading(true);

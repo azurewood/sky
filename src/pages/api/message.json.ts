@@ -119,7 +119,7 @@ export const POST: APIRoute = async ({ request }) => {
     // const content  = formData.get("content");
     // const token  = request.headers.get("Cookie");
     // console.log(from,content,token)
-    const { from, content } = await request.json();
+    const { from, content, owner } = await request.json();
 
     //const token = request.headers.get("Cookie");
     const uid = new URL(request.url).searchParams.get("uid");
@@ -144,7 +144,7 @@ export const POST: APIRoute = async ({ request }) => {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")
-            .insert({ from, content, owner: import.meta.env.ADMIN_UID })
+            .insert({ from, content, owner })
             .select();
 
         if (error) {

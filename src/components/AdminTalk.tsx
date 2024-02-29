@@ -1,7 +1,7 @@
-import { createSignal, type JSX } from "solid-js";
+import { createSignal, type JSX, type Accessor } from "solid-js";
 
 
-const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
+const AdminTalk = ({ from, selection }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
   const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
@@ -21,12 +21,16 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
     e,
   ) => {
     e.preventDefault();
+    if (selection()?.uid === undefined) {
+      setResponse("No message is selected!");
+      return;
+    }
     setResponse("");
     const formElement = e.currentTarget;
     const formData = new FormData(formElement);
     // const formData = new FormData(e.target as HTMLFormElement);
     const content = formData.get("content");
-    // const owner = import.meta.env.ADMIN_UID;
+    const owner = selection()?.uid;
     if (content === undefined || content?.toString() === undefined || content?.toString().length < 5) {
       setResponse("Message is too short!");
       return;
@@ -51,8 +55,9 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
   return (
     <div class="md:w-96 flex justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
       <div class="flex flex-col flex-grow px-3 gap-y-1">
-        <p class="self-center mb-1 text-lg"><a href="#" onClick={handleOpen}>Talk to Sky</a></p>
+        <p class="self-center mb-1 text-lg"><a href="#" onClick={handleOpen}>Sky Talk</a></p>
 
+        {/* <p>{selection()?.uid}</p> */}
         {open() ? <form onSubmit={onSubmit}>
           <div class="flex flex-col">
             <div class="relative w-full min-w-[200px]">
@@ -66,7 +71,7 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
                 name="from"
                 value={from}></input> */}
             </div>
-            <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-md mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">Send</button>
+            <button class={"w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-md mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (selection()?.uid === undefined ? " disabled" : "")}>Send</button>
             {response() && <p class="text-red-700">{response()}</p>}
           </div>
         </form> : <></>}
@@ -89,6 +94,6 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
   )
 }
 
-export default CustomerTalk
+export default AdminTalk
 
 

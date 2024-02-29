@@ -3,8 +3,7 @@ import Base from "../layout/Base.astro";
 import { supabase } from "../lib/supabase";
 import { Reviews, type GuestbookEntry } from "../components/Reviews";
 import Entries from "../components/Entries.astro";
-import CustomerTalk from "../components/CustomerTalk";
-import MessageBox from "../components/MessageBox";
+import MessagePanel from "../components/MessagePanel";
 
 const { data } = (await supabase
   .from("guestbook")
@@ -22,7 +21,7 @@ const { data } = (await supabase
         {Astro.locals.email}
       </span>
       <div class="max-w-prose text-lg mb-2 dark:text-zinc-100">
-        <Entries/>
+        <Entries />
         <!-- <Entries uid={Astro.locals.uid} token={import.meta.env.SKY_API_TOKEN} client:idle /> -->
         <p></p>
       </div>
@@ -33,9 +32,34 @@ const { data } = (await supabase
       >
       <Reviews reviews={data} uid={Astro.locals.uid} client:idle />
     </section>
-    <div class="sticky md:fixed bottom-0 right-0 py-10 flex flex-col">
-      <MessageBox client:visible uid={Astro.locals.uid}></MessageBox>
-      <CustomerTalk client:idle from={Astro.locals.uid}></CustomerTalk>
-    </div>
+    <MessagePanel
+      client:idle
+      from={Astro.locals.uid}
+      to={import.meta.env.ADMIN_UID}
+      admin={Astro.locals.admin}
+    />
+    <!-- <div class="sticky md:fixed bottom-0 right-0 py-10 flex flex-col">
+      <MessageBox
+        client:visible
+        uid={Astro.locals.uid}
+        setSelection={setSelection}
+        selection={selection}
+      />
+      {
+        Astro.locals.admin ? (
+          <AdminTalk
+            client:idle
+            from={Astro.locals.uid}
+            selection={selection}
+          />
+        ) : (
+          <CustomerTalk
+            client:idle
+            from={Astro.locals.uid}
+            owner={import.meta.env.ADMIN_UID}
+          />
+        )
+      }
+    </div> -->
   </div>
 </Base>
