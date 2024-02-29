@@ -1,11 +1,11 @@
-import { createSignal, type JSX } from "solid-js";
+import { createSignal, type JSX, type Setter, type Accessor } from "solid-js";
 
 
-const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
+const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
-  const [loading, setLoading] = createSignal(false);
+  // const [sending, setSending] = createSignal(false);
 
   const handleClose = (_: any) => {
     setOpen(false);
@@ -33,7 +33,7 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
       setResponse("Message is too short!");
       return;
     }
-    setLoading(true);
+    setSending(true);
     const response = await fetch(`/api/message.json?uid=${from}`, {
       method: "POST",
       body: JSON.stringify({ from, content, owner }), //formData,
@@ -44,7 +44,7 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
       setResponse(data.error);
     }
     setContent("");
-    setLoading(false);
+    setSending(false);
   }
 
   const keyUpHandler: JSX.EventHandlerUnion<HTMLTextAreaElement, KeyboardEvent> = (e,) => {
@@ -90,7 +90,7 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
         {/* </div> */}
 
       </div>
-      {loading() ?
+      {sending() ?
         <div class='h-1 w-full bg-slate-100 overflow-hidden'>
           <div class='animate-pulse w-full h-full bg-slate-500 origin-left-right'></div>
         </div> : <div class='h-1 w-full bg-opacity-0 overflow-hidden'></div>}

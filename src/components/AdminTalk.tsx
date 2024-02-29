@@ -1,11 +1,11 @@
-import { createSignal, type JSX, type Accessor } from "solid-js";
+import { createSignal, type JSX, type Accessor, type Setter } from "solid-js";
 
 
-const AdminTalk = ({ from, selection }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const AdminTalk = ({ from, selection, sending, setSending }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
-  const [loading, setLoading] = createSignal(false);
+  // const [sending, setSending] = createSignal(false);
 
   const handleClose = (_: any) => {
     setOpen(false);
@@ -36,7 +36,7 @@ const AdminTalk = ({ from, selection }: { from: string, selection: Accessor<{ id
       setResponse("Message is too short!");
       return;
     }
-    setLoading(true);
+    setSending(true);
     const response = await fetch(`/api/message.json?uid=${from}`, {
       method: "POST",
       body: JSON.stringify({ from, content, owner }), //formData,
@@ -47,7 +47,7 @@ const AdminTalk = ({ from, selection }: { from: string, selection: Accessor<{ id
       setResponse(data.error);
     }
     setContent("");
-    setLoading(false);
+    setSending(false);
   }
 
   const keyUpHandler: JSX.EventHandlerUnion<HTMLTextAreaElement, KeyboardEvent> = (e,) => {
@@ -92,7 +92,7 @@ const AdminTalk = ({ from, selection }: { from: string, selection: Accessor<{ id
         </form> : <></>}
 
       </div>
-      {loading() ?
+      {sending() ?
         <div class='h-1 w-full bg-slate-100 overflow-hidden'>
           <div class='animate-pulse w-full h-full bg-slate-500 origin-left-right'></div>
         </div> : <div class='h-1 w-full bg-opacity-0 overflow-hidden'></div>}
