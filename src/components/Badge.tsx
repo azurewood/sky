@@ -14,7 +14,7 @@ const Badge = ({ type }: { type: number }) => {
 after:content-[''] after:absolute after:top-0 after:right-0 after:h-3 after:w-3 after:bg-blue-100 after:rotate-45 after:align-baseline after:translate-y-0.5
 after:dark:bg-blue-900 after:-z-10 after:scale-90 after:translate-x-1">
                 {
-                    [...Array(type > 0 ? type : 0)].map((_,) =>
+                    [...Array(type > 0 ? (type > 10 ? 10 : type) : 0)].map((_,) =>
                         <svg
                             viewBox="0 0 282.3 270.1"
                             width="16" height="16"
