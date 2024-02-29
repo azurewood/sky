@@ -23,7 +23,13 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
         });
         // console.log(response)
         const data = await response.json();
-        if (data && data.error) {
+        if (data) {
+            if (data.error)
+                setVisible(true);
+            else {
+                if (selection()?.id === message.id)
+                    setSelection(undefined);
+            }
         }
         //   console.log(data)
     }
