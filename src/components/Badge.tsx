@@ -1,6 +1,7 @@
 const Badge = ({ type }: { type: number }) => {
+    // console.log(type)
     let n = 0;
-    if (type < 0)
+    if (type === undefined || type < 0)
         n = 5;
     else if (type < 5)
         n = 5 - type;
