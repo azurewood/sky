@@ -49,23 +49,23 @@ const CustomerTalk = ({ from, owner }: { from: string, owner: string }) => {
   }
 
   return (
-    <div class="md:w-96 flex flex-col justify-between text-blue-200 shadow-inner rounded px-0 py-3 bg-blue-600">
+    <div class="md:w-96 flex flex-col justify-between text-blue-200 shadow-inner rounded px-0 pt-3 pb-1 bg-blue-600">
       {/* <div class="px-3 gap-y-1"> */}
-      <div class="w-full self-center mb-1 text-lg flex flex-row px-3 gap-y-1"><a href="#" onClick={handleOpen} class="text-center flex-grow">Talk to Sky</a>
+      <div class="w-full self-center mb-1 text-lg flex flex-row px-5 gap-y-1"><a href="#" onClick={handleOpen} class="text-center flex-grow">Talk to Sky</a>
         {open() ?
           <div>
-            <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
+            <button class="px-0" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
             <div></div>
           </div>
           :
           <div>
-            <button class="px-3" onClick={handleOpen}><strong class="text-2xl cursor-pointer select-none">&boxbox;</strong></button>
+            <button class="px-0" onClick={handleOpen}><strong class="text-2xl cursor-pointer select-none">&boxbox;</strong></button>
             <div></div>
           </div>}
       </div>
 
       {open() ? <form onSubmit={onSubmit}>
-        <div class="flex flex-col px-3 gap-y-1">
+        <div class="flex flex-col px-5 gap-y-1">
           <div class="relative w-full min-w-[200px]">
             <textarea placeholder="" name="content" id="content" onKeyUp={keyUpHandler} value={content()}
               class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
