@@ -20,7 +20,8 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
         const data = await res.json();
 
         if (!data.error) {
-            setMessages(data);
+            if (!busy())
+                setMessages(data);
             setLoading(false);
         }
 
