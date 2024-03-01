@@ -6,6 +6,6 @@ export const useBusyValue = (initialValue = false) => {
     return { busy, setBusy };
 }
 type BusyContextType = ReturnType<typeof useBusyValue>;
-const BusyContext: Context<{ busy: Accessor<boolean>, setBusy: Setter<boolean> }> = createContext<BusyContextType>(undefined);
+const BusyContext: Context<{ busy: Accessor<boolean>, setBusy: Setter<boolean> }> = createContext<BusyContextType>({ busy: () => false, setBusy: () => false });
 
 export default BusyContext;
