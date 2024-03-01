@@ -1,4 +1,5 @@
-import { createSignal, type JSX, type Accessor, type Setter } from "solid-js";
+import { createSignal, type JSX, type Accessor, type Setter, useContext } from "solid-js";
+import BusyContext from ".";
 
 
 const AdminTalk = ({ from, selection, sending, setSending }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
@@ -6,6 +7,7 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);
+  const {setBusy} = useContext(BusyContext);
 
   const handleClose = (_: any) => {
     setOpen(false);
@@ -37,6 +39,7 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
       return;
     }
     setSending(true);
+    setBusy(true);
     const response = await fetch(`/api/message.json?uid=${from}`, {
       method: "POST",
       body: JSON.stringify({ from, content, owner }), //formData,
@@ -48,6 +51,7 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
     }
     setContent("");
     setSending(false);
+    setBusy(false);
   }
 
   const inputHandler: JSX.InputEventHandler<HTMLTextAreaElement, InputEvent> = (e,) => {

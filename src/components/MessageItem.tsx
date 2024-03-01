@@ -1,4 +1,5 @@
-import { createSignal, type Setter, type Accessor } from "solid-js";
+import { createSignal, type Setter, type Accessor, useContext } from "solid-js";
+import BusyContext from "../components";
 
 export interface Message {
     id: string;
@@ -13,12 +14,14 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
     const [sending, setSending] = createSignal<boolean>(false);
+    const {setBusy} = useContext(BusyContext);
 
     setTimeout(() => setReady(true), 100);
     const handleClose = async (_: any) => {
         // setVisible(false);
         // console.log("xxx");
         setSending(true);
+        setBusy(true);
         const response = await fetch(`/api/message.json?uid=${message.owner}`, {
             method: "PUT", //"DELETE",
             body: JSON.stringify({ id: message.id }), //formData,
@@ -27,6 +30,7 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
         const data = await response.json();
         if (data) {
             setSending(false);
+            setBusy(false);
             if (data.error)
                 setVisible(true);
             else {

@@ -1,6 +1,7 @@
-import { createSignal, onCleanup, For, type Setter, type Accessor } from "solid-js";
+import { createSignal, onCleanup, For, type Setter, type Accessor, useContext } from "solid-js";
 import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
+import BusyContext from ".";
 
 const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     // const [count, setCount] = createSignal(0);
@@ -8,8 +9,11 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
     const [backup, setBackup] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
     // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
+    const { busy } = useContext(BusyContext);
 
     const getMessages = async () => {
+        if (busy())
+            return;
         setLoading(true);
         setBackup(messages());
         const res = await fetch(`/api/message.json?uid=${uid}`);
