@@ -1,5 +1,5 @@
 import { createSignal, type Setter, type Accessor, useContext } from "solid-js";
-import BusyContext from "../components";
+import BusyContext, { updateState } from ".";
 
 export interface Message {
     id: string;
@@ -14,14 +14,15 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
     const [sending, setSending] = createSignal<boolean>(false);
-    const {setBusy} = useContext(BusyContext);
+    const { busy, setBusy } = useContext(BusyContext);
 
     setTimeout(() => setReady(true), 100);
     const handleClose = async (_: any) => {
         // setVisible(false);
         // console.log("xxx");
         setSending(true);
-        setBusy(true);
+        // setBusy([...busy(), { name: "Message" + message.id, state: true }]);
+        setBusy(updateState(busy(), "Message" + message.id, { state: true }));
         const response = await fetch(`/api/message.json?uid=${message.owner}`, {
             method: "PUT", //"DELETE",
             body: JSON.stringify({ id: message.id }), //formData,
@@ -30,7 +31,6 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
         const data = await response.json();
         if (data) {
             setSending(false);
-            setBusy(false);
             if (data.error)
                 setVisible(true);
             else {
@@ -39,6 +39,7 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
                     setSelection(undefined);
             }
         }
+        setBusy(updateState(busy(), "Message" + message.id, { state: false }));
         //   console.log(data)
     }
     const handleClick = (_: any) => {

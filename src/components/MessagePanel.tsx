@@ -3,10 +3,11 @@ import AdminTalk from "../components/AdminTalk";
 import MessageBox from "../components/MessageBox";
 import { createSignal } from "solid-js";
 import BusyContext from "../components";
+import { type BusyStatus } from "../components";
 
 const [selection, setSelection] = createSignal<{ id: string; uid: string } | undefined>();
 const [sending, setSending] = createSignal<boolean>(false);
-const [busy, setBusy] = createSignal<boolean>(false);
+const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
   return (

@@ -1,12 +1,12 @@
 import { createSignal, type JSX, type Setter, type Accessor, useContext } from "solid-js";
-import BusyContext from ".";
+import BusyContext, { updateState } from ".";
 
 const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);
-  const {setBusy} = useContext(BusyContext);
+  const { busy, setBusy } = useContext(BusyContext);
 
   const handleClose = (_: any) => {
     setOpen(false);
@@ -35,7 +35,8 @@ const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owne
       return;
     }
     setSending(true);
-    setBusy(true);
+    //setBusy([...busy(), { name: "CustomerTalk", state: true }]);
+    setBusy(updateState(busy(), "CustomerTalk", { state: true }));
     const response = await fetch(`/api/message.json?uid=${from}`, {
       method: "POST",
       body: JSON.stringify({ from, content, owner }), //formData,
@@ -47,7 +48,7 @@ const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owne
     }
     setContent("");
     setSending(false);
-    setBusy(false);
+    setBusy(updateState(busy(), "CustomerTalk", { state: false }));
   }
 
   const inputHandler: JSX.InputEventHandler<HTMLTextAreaElement, InputEvent> = (e,) => {

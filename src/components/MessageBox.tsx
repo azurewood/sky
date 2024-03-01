@@ -9,10 +9,10 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
     const [backup, setBackup] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
     // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
-    const { busy } = useContext(BusyContext);
+    const { busy, setBusy } = useContext(BusyContext);
 
     const getMessages = async () => {
-        if (busy())
+        if (findBusy() >= 0)
             return;
         setLoading(true);
         setBackup(messages());
@@ -20,8 +20,10 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
         const data = await res.json();
 
         if (!data.error) {
-            if (!busy())
+            if (findBusy() < 0) {
+                setBusy([]);
                 setMessages(data);
+            }
             setLoading(false);
         }
 
@@ -33,6 +35,13 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
 
     const found = (message: Message) => {
         return backup().findIndex(a => message.id === a.id);
+    }
+
+    const findBusy = () => {
+        return busy().findIndex(a => {
+            // console.log(a.id, a.state)
+            return a.state === true;
+        });
     }
 
 
