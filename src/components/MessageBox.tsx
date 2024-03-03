@@ -29,7 +29,7 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
 
     }
 
-    const timer = setInterval(getMessages, 15000);
+    const timer = setInterval(getMessages, 10000);
 
     onCleanup(() => { clearInterval(timer) });
 
@@ -63,7 +63,8 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
             </For>
             {loading() ?
                 <div class='h-1 w-full bg-pink-100 overflow-hidden'>
-                    <div class='animate-pulse w-full h-full bg-pink-500 origin-left-right'></div>
+                    {/* <div class='animate-pulse w-full h-full bg-pink-500 origin-left-right'></div> */}
+                    <div class='animate-backprog w-full h-full bg-pink-500 origin-right-left'></div>
                 </div> : <div class='h-1 w-full bg-opacity-5 overflow-hidden'></div>}
         </ul>
     )
