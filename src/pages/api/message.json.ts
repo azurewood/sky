@@ -144,7 +144,7 @@ export const POST: APIRoute = async ({ request }) => {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")
-            .insert({ from, content, owner })
+            .insert({ user:from, content, owner })
             .select();
 
         if (error) {
