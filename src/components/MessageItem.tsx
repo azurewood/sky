@@ -10,7 +10,7 @@ export interface Message {
     read: boolean;
 }
 
-const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const MessageItem = ({ fresh, message, setSelection, selection, setOpen }: { setOpen: Setter<boolean>, fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
     const [sending, setSending] = createSignal<boolean>(false);
@@ -51,6 +51,7 @@ const MessageItem = ({ fresh, message, setSelection, selection }: { fresh: boole
     const handleClick = (_: any) => {
         // console.log(message.id)
         setSelection({ id: message.id, uid: message.user });
+        setOpen(true);
     }
 
 

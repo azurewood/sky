@@ -1,8 +1,8 @@
 import { createSignal, createEffect, type JSX, type Setter, type Accessor, useContext } from "solid-js";
 import DataContext, { updateState, type User } from ".";
 
-const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
-  const [open, setOpen] = createSignal(false);
+const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen }: { open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
+  // const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);

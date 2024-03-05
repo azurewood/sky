@@ -3,8 +3,8 @@ import DataContext, { updateState, type User } from ".";
 import UserItem from "./UserItem";
 
 
-const AdminTalk = ({ from, selection, sending, setSending }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
-  const [open, setOpen] = createSignal(false);
+const AdminTalk = ({ from, selection, sending, setSending, open, setOpen }: { open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
+  // const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);

@@ -9,6 +9,7 @@ const [selection, setSelection] = createSignal<{ id: string; uid: string } | und
 const [sending, setSending] = createSignal<boolean>(false);
 const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 const [user, setUser] = createSignal<User[]>([]);
+const [open, setOpen] = createSignal(false);
 
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
 
@@ -31,6 +32,7 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
           uid={from}
           setSelection={setSelection}
           selection={selection}
+          setOpen={setOpen}
         />
         {
           admin ? (
@@ -40,6 +42,8 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               selection={selection}
               sending={sending}
               setSending={setSending}
+              open={open}
+              setOpen={setOpen}
             />
           ) : (
             <CustomerTalk
@@ -48,6 +52,8 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               owner={to}
               sending={sending}
               setSending={setSending}
+              open={open}
+              setOpen={setOpen}
             />
           )
         }
