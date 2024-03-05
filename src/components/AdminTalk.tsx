@@ -36,7 +36,9 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
     e,
   ) => {
     e.preventDefault();
-    if (selection()?.uid === undefined) {
+    // if (selection()?.uid === undefined) {
+    // console.log(userInfo())
+    if (userInfo().user === "") {
       setResponse("No user is selected!");
       return;
     }
@@ -45,7 +47,7 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
     const formData = new FormData(formElement);
     // const formData = new FormData(e.target as HTMLFormElement);
     const content = formData.get("content");
-    const owner = selection()?.uid;
+    const owner = userInfo().user; //selection()?.uid;
     if (content === undefined || content?.toString() === undefined || content?.toString().length < 5) {
       setResponse("Message is too short!");
       return;
