@@ -79,23 +79,27 @@ const CustomerTalk = ({ from, owner, sending, setSending }: { from: string, owne
             </div>}
         </div>
 
-        {open() ? <form onSubmit={onSubmit}>
+        {open() ?
           <div class="flex flex-col px-5 gap-y-1">
-            <div class="relative w-full min-w-[200px]">
-              <textarea placeholder="" name="content" id="content" onInput={inputHandler} value={content()}
-                class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
-              <label for="content"
-                class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                Dear {userInfo()?.name},
-              </label>
-              {/* <input type="text" style="display:none"
+            <form onSubmit={onSubmit}>
+              <div class="relative w-full min-w-[200px]">
+                <textarea placeholder="" name="content" id="content" onInput={inputHandler} value={content()}
+                  class="peer h-full min-h-[120px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
+                <label for="content"
+                  class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                  Dear {userInfo()?.name},
+                </label>
+                {/* <input type="text" style="display:none"
                 name="from"
                 value={from}></input> */}
-            </div>
-            <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">Send</button>
-            {response() && <p class="text-red-700">{response()}</p>}
+              </div>
+              <div class="flex flex-row justify-center">
+                <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">Send</button>
+              </div>
+              {response() && <p class="text-red-700">{response()}</p>}
+            </form>
           </div>
-        </form> : <></>}
+          : <></>}
 
         {/* </div> */}
 

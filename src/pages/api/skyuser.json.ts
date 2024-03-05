@@ -25,9 +25,10 @@ export const GET: APIRoute = async ({ request }) => {
     if (!error && uid === data.user?.id) {
         const { data, error } = await supabase
             .from("message_user")
-            .select("*")
-            .limit(10);
+            .select("*").order('created_at', { ascending: false, nullsFirst: false })
+            .range(0, 10);
 
+        // console.log(data)
         if (error) {
             return new Response(
                 JSON.stringify({

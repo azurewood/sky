@@ -10,9 +10,9 @@ const UserItem = ({ user, userInfo, setUserInfo, setShowUser }: { user: User, us
     }
 
     return (
-        <div onClick={handleClick} class={"flex flex-row justify-between text-slate-100 shadow-inner rounded px-5 py-2 transform duration-1000 transition-transform " +
+        <div onClick={handleClick} class={"flex flex-row justify-between text-slate-100 shadow-inner px-5 py-3 transform duration-1000 transition-transform " +
             (userInfo().user === user.user ? 'bg-slate-600' : 'bg-slate-400 bg-opacity-75')}>
-            <div>{user.name}</div>
+            <div><strong>{user.name}</strong></div>
             <div>{user.email}</div>
         </div>
     )
