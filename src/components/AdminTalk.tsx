@@ -1,5 +1,6 @@
-import { createSignal, createEffect, type JSX, type Accessor, type Setter, useContext } from "solid-js";
+import { createSignal, createEffect, For, type JSX, type Accessor, type Setter, useContext } from "solid-js";
 import DataContext, { updateState, type User } from ".";
+import UserItem from "./UserItem";
 
 
 const AdminTalk = ({ from, selection, sending, setSending }: { from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
@@ -8,10 +9,11 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);
   const { busy, setBusy, user } = useContext(DataContext);
-  const [userInfo, setUserInfo] = createSignal<User>();
+  const [userInfo, setUserInfo] = createSignal<User>({ user: "", email: "", name: "" });
+  const [showUser, setShowUser] = createSignal(false);
 
   createEffect(() => {
-    setUserInfo(user().find(a => a.user === selection()?.uid));
+    setUserInfo(user().find(a => a.user === selection()?.uid) || { user: "", email: "", name: "" });
     // console.log(userInfo());
   })
 
@@ -23,6 +25,10 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
   const handleOpen = (_: any) => {
     setOpen(true);
     // console.log(open(),"yyy");
+  }
+  const handleShowUser = (e: any) => {
+    e.preventDefault();
+    setShowUser(true);
   }
 
   // async function submit(e: SubmitEvent) {
@@ -86,23 +92,40 @@ const AdminTalk = ({ from, selection, sending, setSending }: { from: string, sel
         </div>
 
         {/* <p>{selection()?.uid}</p> */}
-        {open() ? <form onSubmit={onSubmit}>
-          <div class="flex flex-col px-5 gap-y-1">
-            <div class="relative w-full min-w-[200px]">
-              <textarea placeholder="" name="content" id="content" onInput={inputHandler} value={content()}
-                class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
-              <label for="content"
-                class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                Dear {userInfo()?.name}&lt;{userInfo()?.email}&gt;,
-              </label>
-              {/* <input type="text" style="display:none"
+        {open() ? (showUser() ?
+          <ul class="">
+            <For each={user()}>
+              {
+                (user) => (
+                  <li>
+                    <UserItem user={user} userInfo={userInfo} setUserInfo={setUserInfo} setShowUser={setShowUser}></UserItem>
+                  </li>
+                )
+              }
+            </For>
+
+          </ul>
+          : <form onSubmit={onSubmit}>
+            <div class="flex flex-col px-5 gap-y-1">
+              <div class="relative w-full min-w-[200px]">
+                <textarea placeholder="" name="content" id="content" onInput={inputHandler} value={content()}
+                  class="peer h-full min-h-[100px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
+                <label for="content"
+                  class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
+                  Dear {userInfo()?.name}&lt;{userInfo()?.email}&gt;,
+                </label>
+                {/* <input type="text" style="display:none"
                 name="from"
                 value={from}></input> */}
+              </div>
+              <div class="flex flex-row justify-center gap-x-9">
+                <button onclick={handleShowUser} class={"w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>🏃🏻‍♂️💨</button>
+                <button class={"w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>Send</button>
+              </div>
+
+              {response() && <p class="text-red-700">{response()}</p>}
             </div>
-            <button class={"w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-md mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (selection()?.uid === undefined ? " disabled" : "")}>Send</button>
-            {response() && <p class="text-red-700">{response()}</p>}
-          </div>
-        </form> : <></>}
+          </form>) : <></>}
 
       </div>
       {sending() ?
