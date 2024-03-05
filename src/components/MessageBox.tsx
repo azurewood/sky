@@ -1,7 +1,7 @@
 import { createSignal, onCleanup, For, type Setter, type Accessor, useContext } from "solid-js";
 import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
-import BusyContext from ".";
+import DataContext from ".";
 
 const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     // const [count, setCount] = createSignal(0);
@@ -9,7 +9,8 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
     const [backup, setBackup] = createSignal<Message[]>([]);
     const [loading, setLoading] = createSignal(false);
     // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
-    const { busy, setBusy } = useContext(BusyContext);
+    const { busy, setBusy } = useContext(DataContext);
+    const [error, setError] = createSignal(false);
 
     const getMessages = async () => {
         if (findBusy() >= 0)
@@ -20,12 +21,16 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
         const data = await res.json();
 
         if (!data.error) {
+            setError(false);
             if (findBusy() < 0) {
                 setBusy([]);
                 setMessages(data);
             }
             setLoading(false);
         }
+        else
+            setError(true);
+
 
     }
 
@@ -64,7 +69,7 @@ const MessageBox = ({ uid, setSelection, selection }: { uid: string, setSelectio
             {loading() ?
                 <div class='h-1 w-full bg-pink-100 overflow-hidden'>
                     {/* <div class='animate-pulse w-full h-full bg-pink-500 origin-left-right'></div> */}
-                    <div class='animate-backprog w-full h-full bg-pink-500 origin-right-left'></div>
+                    <div class={'w-full h-full bg-pink-500 origin-right-left' + (error() ? " animate-pulse" : " animate-backprog")} ></div>
                 </div> : <div class='h-1 w-full bg-opacity-5 overflow-hidden'></div>}
         </ul>
     )

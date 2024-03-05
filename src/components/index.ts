@@ -5,6 +5,12 @@ export interface BusyStatus {
     state?: boolean;
 };
 
+export interface User {
+    user: string,
+    email: string,
+    name?: string | undefined;
+}
+
 export const updateState = (arr: BusyStatus[], id: string, updatedData: Partial<BusyStatus>): BusyStatus[] => {
     if (arr.findIndex(item => item.id === id) < 0)
         return [...arr, { id: id, ...updatedData }];
@@ -12,13 +18,14 @@ export const updateState = (arr: BusyStatus[], id: string, updatedData: Partial<
         return arr.map((item) => (item.id === id ? { ...item, ...updatedData } : item))
 }
 
-export const useBusyValue = (initialValue = []) => {
+export const useDataValue = (initialValue = []) => {
     const [busy, setBusy] = createSignal<BusyStatus[]>(initialValue ?? []);
+    const [user, setUser] = createSignal<User[]>([]);
     // return [busy,setBusy] as const;
-    return { busy, setBusy };
+    return { busy, setBusy, user, setUser };
 }
-type BusyContextType = ReturnType<typeof useBusyValue>;
+type DataContextType = ReturnType<typeof useDataValue>;
 //const BusyContext: Context<{ busy: Accessor<boolean>, setBusy: Setter<boolean> }> = createContext<BusyContextType>({ busy: () => false, setBusy: () => false });
-const BusyContext = createContext<BusyContextType>({ busy: () => [], setBusy: () => [] });
+const DataContext = createContext<DataContextType>({ busy: () => [], setBusy: () => [], user: () => [], setUser: () => [] });
 
-export default BusyContext;
+export default DataContext;
