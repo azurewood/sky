@@ -10,6 +10,7 @@ const [sending, setSending] = createSignal<boolean>(false);
 const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 const [user, setUser] = createSignal<User[]>([]);
 const [open, setOpen] = createSignal(false);
+const [showSide, setshowSide] = createSignal(false);
 
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
 
@@ -33,6 +34,7 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
           setSelection={setSelection}
           selection={selection}
           setOpen={setOpen}
+          setshowSide={setshowSide}
         />
         {
           admin ? (
@@ -44,6 +46,8 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               setSending={setSending}
               open={open}
               setOpen={setOpen}
+              showSide={showSide}
+              setshowSide={setshowSide}
             />
           ) : (
             <CustomerTalk

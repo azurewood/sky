@@ -2,11 +2,11 @@ import { type User } from ".";
 import { type Setter, type Accessor } from "solid-js";
 
 
-const UserItem = ({ user, userInfo, setUserInfo, setShowUser }: { user: User, userInfo: Accessor<User>, setUserInfo: Setter<User>, setShowUser: Setter<boolean> }) => {
+const UserItem = ({ user, userInfo, setUserInfo, setshowSide }: { user: User, userInfo: Accessor<User>, setUserInfo: Setter<User>, setshowSide: Setter<boolean> }) => {
     const handleClick = (_: any) => {
         // console.log(message.id)
         setUserInfo(user);
-        setShowUser(false);
+        setshowSide(false);
     }
 
     return (
