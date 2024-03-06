@@ -82,6 +82,7 @@ export const GET: APIRoute = async ({ request }) => {
 
     // console.log(data.user?.id, uid)
     //  console.log(data)
+    let result = { received: <any>[], sent: <any>[] };
     if (!error && uid === data.user?.id) {
         const { data, error } = await supabase
             .from("message")
@@ -98,8 +99,27 @@ export const GET: APIRoute = async ({ request }) => {
                 { status: 500 },
             );
         }
+        result.received = data;
+        {
+            const { data, error } = await supabase
+                .from("message")
+                .select("*")
+                .eq("user", uid)
+                .order("created_at", { ascending: false })
+                .range(0, 19);
 
-        return new Response(JSON.stringify(data));
+            if (error) {
+                return new Response(
+                    JSON.stringify({
+                        error: error.message,
+                    }),
+                    { status: 500 },
+                );
+            }
+            result.sent = data;
+        }
+
+        return new Response(JSON.stringify(result));
     }
     else {
         return new Response(
@@ -144,7 +164,7 @@ export const POST: APIRoute = async ({ request }) => {
         // console.log(cookie);
         const { data, error } = await supabase
             .from("message")
-            .insert({ user:from, content, owner })
+            .insert({ user: from, content, owner })
             .select();
 
         if (error) {

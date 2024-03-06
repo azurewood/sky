@@ -3,7 +3,7 @@ import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
 import DataContext from ".";
 
-const MessageBox = ({ uid, setSelection, selection, setOpen, setshowSide }: { setshowSide: Setter<boolean>|undefined, setOpen: Setter<boolean>, uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const MessageBox = ({ uid, setSelection, selection, setOpen, setShowSide, setHistory }: {setHistory:Setter<Message[]>, setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     // const [count, setCount] = createSignal(0);
     const [messages, setMessages] = createSignal<Message[]>([]);
     const [backup, setBackup] = createSignal<Message[]>([]);
@@ -11,6 +11,7 @@ const MessageBox = ({ uid, setSelection, selection, setOpen, setshowSide }: { se
     // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
     const { busy, setBusy } = useContext(DataContext);
     const [error, setError] = createSignal(false);
+    
 
     const getMessages = async () => {
         if (findBusy() >= 0)
@@ -24,7 +25,8 @@ const MessageBox = ({ uid, setSelection, selection, setOpen, setshowSide }: { se
             setError(false);
             if (findBusy() < 0) {
                 setBusy([]);
-                setMessages(data);
+                setMessages(data.received);
+                setHistory(data.sent);
             }
             setLoading(false);
         }
@@ -60,7 +62,7 @@ const MessageBox = ({ uid, setSelection, selection, setOpen, setshowSide }: { se
                                 <p class="self-center px-3"><strong>Info</strong>{message.content}</p>
                                 <button class="px-3" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
                             </div> */}
-                            <MessageItem fresh={found(message) < 0 ? true : false} message={message} setshowSide={setshowSide} setOpen={setOpen} setSelection={setSelection} selection={selection}></MessageItem>
+                            <MessageItem fresh={found(message) < 0 ? true : false} message={message} setShowSide={setShowSide} setOpen={setOpen} setSelection={setSelection} selection={selection}></MessageItem>
 
                         </li>
                     )

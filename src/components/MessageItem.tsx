@@ -10,7 +10,7 @@ export interface Message {
     read: boolean;
 }
 
-const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setshowSide }: { setshowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShowSide }: { setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
     const [sending, setSending] = createSignal<boolean>(false);
@@ -52,15 +52,15 @@ const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setshow
         // console.log(message.id)
         setSelection({ id: message.id, uid: message.user });
         setOpen(true);
-        // setshowSide??(false);
-        // console.log(setshowSide)
-        if (setshowSide)
-            setshowSide(false);
+        // setShowSide??(false);
+        // console.log(setShowSide)
+        if (setShowSide)
+            setShowSide(false);
     }
 
 
     return (
-        <div onClick={handleClick} class={"relative flex flex-row justify-between text-blue-100 shadow-inner rounded px-0 py-2 transform duration-1000 transition-transform " +
+        <div onClick={handleClick} class={"relative flex flex-row justify-between text-lg text-blue-100 shadow-inner rounded px-0 py-3 transform duration-1000 transition-transform " +
             (selection()?.id === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
             (ready() ? "scale-y-100" : (fresh ? "scale-y-75" : "scale-y-100")) + " " +
             (fresh ? "bg-opacity-95" : "") + " " + (visible() ? 'block' : 'hidden')}>

@@ -3,14 +3,14 @@ import DataContext, { updateState, type User } from ".";
 import UserItem from "./UserItem";
 
 
-const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSide, setshowSide }: { showSide: Accessor<boolean>, setshowSide: Setter<boolean>, open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
+const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSide, setShowSide }: { showSide: Accessor<boolean>, setShowSide: Setter<boolean>, open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   // const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
   // const [sending, setSending] = createSignal(false);
   const { busy, setBusy, user } = useContext(DataContext);
   const [userInfo, setUserInfo] = createSignal<User>({ user: "", email: "", name: "" });
-  // const [showSide, setshowSide] = createSignal(false);
+  // const [showSide, setShowSide] = createSignal(false);
 
   createEffect(() => {
     setUserInfo(user().find(a => a.user === selection()?.uid) || { user: "", email: "", name: "" });
@@ -26,9 +26,9 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
     setOpen(true);
     // console.log(open(),"yyy");
   }
-  const handleshowSide = (e: any) => {
+  const handleShowSide = (e: any) => {
     e.preventDefault();
-    setshowSide(true);
+    setShowSide(true);
   }
 
   // async function submit(e: SubmitEvent) {
@@ -100,7 +100,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
               {
                 (user) => (
                   <div>
-                    <UserItem user={user} userInfo={userInfo} setUserInfo={setUserInfo} setshowSide={setshowSide}></UserItem>
+                    <UserItem user={user} userInfo={userInfo} setUserInfo={setUserInfo} setShowSide={setShowSide}></UserItem>
                   </div>
                 )
               }
@@ -121,7 +121,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
                 value={from}></input> */}
               </div>
               <div class="flex flex-row justify-center gap-x-9">
-                <button onclick={handleshowSide} class={"w-32 mb-0 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>🏃🏻‍♂️💨</button>
+                <button onclick={handleShowSide} class={"w-32 mb-0 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>💬🏃🏻‍♂️💨</button>
                 <button class={"w-32 mb-0 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>Send</button>
               </div>
             </form>

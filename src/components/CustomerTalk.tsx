@@ -1,7 +1,9 @@
-import { createSignal, createEffect, type JSX, type Setter, type Accessor, useContext } from "solid-js";
+import { createSignal, createEffect, type JSX, type Setter, type Accessor, useContext, For } from "solid-js";
 import DataContext, { updateState, type User } from ".";
+import { type Message } from "./MessageItem";
+import HistoryItem from "./HistoryItem";
 
-const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen }: { open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
+const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen, history, showSide, setShowSide }: { showSide: Accessor<boolean>, setShowSide: Setter<boolean>, history: Accessor<Message[]>, open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, owner: string, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   // const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
@@ -62,6 +64,16 @@ const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen }: { ope
     setContent(e.currentTarget.value);
   }
 
+  const handleShowSide = (e: any) => {
+    e.preventDefault();
+    setShowSide(true);
+  }
+
+  const handleHideSide = (e: any) => {
+    e.preventDefault();
+    setShowSide(false);
+  }
+
   return (
     <>
       <div class="md:w-96 flex flex-col justify-between text-blue-200 shadow-inner rounded px-0 pt-3 pb-2 bg-blue-600">
@@ -79,8 +91,19 @@ const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen }: { ope
             </div>}
         </div>
 
-        {open() ?
-          <div class="flex flex-col px-5 gap-y-1">
+        {open() ? (showSide() ?
+          <div onclick={handleHideSide} class="flex flex-col h-[200px] overflow-y-auto">
+            <For each={history()}>
+              {
+                (message) => (
+                  <div>
+                    <HistoryItem message={message}></HistoryItem>
+                  </div>
+                )
+              }
+            </For>
+          </div> :
+          <div class="flex flex-col px-5 gap-y-1 h-[200px]">
             <form onSubmit={onSubmit}>
               <div class="relative w-full min-w-[200px]">
                 <textarea placeholder="" name="content" id="content" onInput={inputHandler} value={content()}
@@ -93,12 +116,13 @@ const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen }: { ope
                 name="from"
                 value={from}></input> */}
               </div>
-              <div class="flex flex-row justify-center">
+              <div class="flex flex-row justify-center gap-x-9">
+                <button onclick={handleShowSide} class={"w-32 mb-0 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed" + (userInfo()?.user ? "" : " disabled")}>💬🏃🏻‍♂️💨</button>
                 <button class="w-32 mb-2 self-center select-none border shadow active:translate-y-px active:translate-x-px dark:bg-zinc-100 bg-zinc-900 border-zinc-900 py-1.5 dark:border-zinc-100 rounded-full mt-2 dark:text-zinc-900 text-zinc-100 font-medium text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 dark:focus:ring-offset-zinc-700 disabled:opacity-50 disabled:cursor-not-allowed">Send</button>
               </div>
               {response() && <p class="text-red-700">{response()}</p>}
             </form>
-          </div>
+          </div>)
           : <></>}
 
         {/* </div> */}

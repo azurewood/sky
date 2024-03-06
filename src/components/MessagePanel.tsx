@@ -4,13 +4,15 @@ import MessageBox from "../components/MessageBox";
 import { createSignal, createEffect } from "solid-js";
 import DataContext from "../components";
 import { type BusyStatus, type User } from "../components";
+import { type Message } from "./MessageItem";
 
 const [selection, setSelection] = createSignal<{ id: string; uid: string } | undefined>();
 const [sending, setSending] = createSignal<boolean>(false);
 const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 const [user, setUser] = createSignal<User[]>([]);
 const [open, setOpen] = createSignal(false);
-const [showSide, setshowSide] = createSignal(false);
+const [showSide, setShowSide] = createSignal(false);
+const [history, setHistory] = createSignal<Message[]>([]);
 
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
 
@@ -34,7 +36,8 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
           setSelection={setSelection}
           selection={selection}
           setOpen={setOpen}
-          setshowSide={setshowSide}
+          setShowSide={setShowSide}
+          setHistory={setHistory}
         />
         {
           admin ? (
@@ -47,7 +50,7 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               open={open}
               setOpen={setOpen}
               showSide={showSide}
-              setshowSide={setshowSide}
+              setShowSide={setShowSide}
             />
           ) : (
             <CustomerTalk
@@ -58,6 +61,9 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               setSending={setSending}
               open={open}
               setOpen={setOpen}
+              history={history}
+              showSide={showSide}
+              setShowSide={setShowSide}
             />
           )
         }
