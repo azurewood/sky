@@ -64,7 +64,7 @@ const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShow
             (selection()?.id === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
             (ready() ? "scale-y-100" : (fresh ? "scale-y-75" : "scale-y-100")) + " " +
             (fresh ? "bg-opacity-95" : "") + " " + (visible() ? 'block' : 'hidden')}>
-            <p class="flex-grow self-center pl-5 max-h-20 overflow-y-scroll overflow-x-clip"><strong>{userInfo()?.name}: </strong>{message.content}</p>
+            <p class="flex-grow self-center pl-5 max-h-20 overflow-y-scroll overflow-x-clip scrollbar-hide"><strong>{userInfo()?.name}: </strong>{message.content}</p>
             <button class={"px-5" + (sending() ? " hidden" : "")} onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
             {sending() ? <div class='absolute top-0 left-0 h-full w-full opacity-70 bg-slate-100 overflow-hidden'>
                 <div class='animate-pulse w-full h-full bg-slate-500 origin-left-right'></div>
