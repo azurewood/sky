@@ -78,9 +78,9 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
 
   return (
     <>
-      <div class="md:w-96 flex flex-col justify-between text-blue-200 shadow-inner rounded px-0 pt-3 pb-2 bg-blue-600">
+      <div class="md:w-96 flex flex-col justify-between text-blue-200 shadow-inner rounded px-0 pt-3 pb-1 bg-blue-600">
 
-        <div class="w-full self-center mb-1 text-lg flex flex-row px-5 gap-y-1"><a href="#" onClick={handleOpen} class="text-center flex-grow">Sky Talk</a>
+        <div class="w-full self-center mb-1 text-lg flex flex-row px-5 pb-1 gap-y-1"><a href="#" onClick={handleOpen} class="text-center flex-grow">Sky Talk</a>
           {open() ?
             <div>
               <button class="px-0" onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>

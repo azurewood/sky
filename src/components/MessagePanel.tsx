@@ -17,12 +17,15 @@ const [history, setHistory] = createSignal<Message[]>([]);
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
 
   createEffect(async () => {
-    const res = await fetch(`/api/skyuser.json?uid=${from}`);
-    const data = await res.json();
+    // console.log(from,import.meta.env.ADMIN_UID)
+    if (admin) {
+      const res = await fetch(`/api/skyuser.json?uid=${from}`);
+      const data = await res.json();
 
-    if (!data.error) {
-      // console.log(data)
-      setUser(data);
+      if (!data.error) {
+        // console.log(data)
+        setUser(data);
+      }
     }
 
   });

@@ -5,7 +5,7 @@ export const GET: APIRoute = async ({ request }) => {
 
     const uid = new URL(request.url).searchParams.get("uid");
     // console.log(uid)
-    if (!uid || uid == undefined) {
+    if (!uid || uid == undefined || uid != import.meta.env.ADMIN_UID) {
         return new Response(
             JSON.stringify({
                 error: "Not supported!",
@@ -51,6 +51,11 @@ export const GET: APIRoute = async ({ request }) => {
 
 };
 
+/**
+ * This method is deprecated
+ * @param param0 
+ * @returns 
+ */
 export const POST: APIRoute = async ({ request }) => {
     const { uid, token } = await request.json();
     // console.log(type)

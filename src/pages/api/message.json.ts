@@ -1,5 +1,6 @@
 import type { APIRoute } from "astro";
 import { supabase } from "../../lib/supabase";
+import { type Message } from "../../components/MessageItem";
 
 
 export const PUT: APIRoute = async ({ request }) => {
@@ -82,7 +83,7 @@ export const GET: APIRoute = async ({ request }) => {
 
     // console.log(data.user?.id, uid)
     //  console.log(data)
-    let result = { received: <any>[], sent: <any>[] };
+    let result = { received: <Message[]>[], sent: <Message[]>[] };
     if (!error && uid === data.user?.id) {
         const { data, error } = await supabase
             .from("message")
