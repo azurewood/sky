@@ -1,7 +1,7 @@
 import CustomerTalk from "../components/CustomerTalk";
 import AdminTalk from "../components/AdminTalk";
 import MessageBox from "../components/MessageBox";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createMemo } from "solid-js";
 import DataContext from "../components";
 import { type BusyStatus, type User } from "../components";
 import { type Message } from "./MessageItem";
@@ -16,16 +16,18 @@ const [history, setHistory] = createSignal<Message[]>([]);
 
 const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: boolean }) => {
 
-  createEffect(async () => {
+  createMemo(async () => {
     // console.log(from,import.meta.env.ADMIN_UID)
     if (admin) {
-      const res = await fetch(`/api/skyuser.json?uid=${from}`);
-      const data = await res.json();
+      try {
+        const res = await fetch(`/api/skyuser.json?uid=${from}`);
+        const data = await res.json();
 
-      if (!data.error) {
-        // console.log(data)
-        setUser(data);
-      }
+        if (!data.error) {
+          // console.log(data)
+          setUser(data);
+        }
+      } catch (err) { }
     }
 
   });

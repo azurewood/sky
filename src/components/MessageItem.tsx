@@ -1,4 +1,4 @@
-import { createSignal, createEffect, type Setter, type Accessor, useContext } from "solid-js";
+import { createSignal, createMemo, type Setter, type Accessor, useContext } from "solid-js";
 import DataContext, { updateState, type User } from ".";
 
 export interface Message {
@@ -17,7 +17,7 @@ const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShow
     const [userInfo, setUserInfo] = createSignal<User>();
     const { busy, setBusy, user } = useContext(DataContext);
 
-    createEffect(() => {
+    createMemo(() => {
         setUserInfo(user().find(a => a.user === message.user));
         // console.log(userInfo());
     })

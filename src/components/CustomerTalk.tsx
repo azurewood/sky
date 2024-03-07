@@ -1,4 +1,4 @@
-import { createSignal, createEffect, type JSX, type Setter, type Accessor, useContext, For } from "solid-js";
+import { createSignal, createMemo, type JSX, type Setter, type Accessor, useContext, For } from "solid-js";
 import DataContext, { updateState, type User } from ".";
 import { type Message } from "./MessageItem";
 import HistoryItem from "./HistoryItem";
@@ -11,7 +11,7 @@ const CustomerTalk = ({ from, owner, sending, setSending, open, setOpen, history
   const { busy, setBusy, user } = useContext(DataContext);
   const [userInfo, setUserInfo] = createSignal<User>();
 
-  createEffect(() => {
+  createMemo(() => {
     setUserInfo(user().find(a => a.user === owner));
     // console.log(userInfo());
   })

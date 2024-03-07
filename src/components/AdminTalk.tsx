@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For, type JSX, type Accessor, type Setter, useContext } from "solid-js";
+import { createSignal, createMemo, For, type JSX, type Accessor, type Setter, useContext } from "solid-js";
 import DataContext, { updateState, type User } from ".";
 import UserItem from "./UserItem";
 
@@ -12,7 +12,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
   const [userInfo, setUserInfo] = createSignal<User>({ user: "", email: "", name: "" });
   // const [showSide, setShowSide] = createSignal(false);
 
-  createEffect(() => {
+  createMemo(() => {
     setUserInfo(user().find(a => a.user === selection()?.uid) || { user: "", email: "", name: "" });
     // console.log(userInfo());
   })
