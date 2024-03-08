@@ -29,6 +29,7 @@ const fetcher: ResourceFetcher<true, GuestbookEntry[], GuestbookEntry> = async (
   }
 
   const prev = value ?? [];
+  // console.log(refetching, value)
   return [...data, ...prev];
 };
 

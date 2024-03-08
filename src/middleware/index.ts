@@ -75,6 +75,7 @@ export const onRequest = defineMiddleware(
         sameSite: "strict",
         path: "/",
         secure: true,
+        maxAge: 604800,
       });
       cookies.set("sb-refresh-token", data?.session?.refresh_token!, {
         sameSite: "strict",

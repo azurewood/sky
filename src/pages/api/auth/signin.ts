@@ -44,6 +44,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     sameSite: "strict",
     path: "/",
     secure: true,
+    maxAge: 604800,
   });
   cookies.set("sb-refresh-token", refresh_token, {
     sameSite: "strict",

@@ -22,6 +22,7 @@ export const GET: APIRoute = async ({ url, cookies, redirect }) => {
     path: "/",
     secure: true,
     httpOnly: true,
+    maxAge: 604800,
   });
   cookies.set("sb-refresh-token", refresh_token, {
     path: "/",
