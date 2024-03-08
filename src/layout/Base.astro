@@ -73,14 +73,24 @@ const canonicalURL = new URL(Astro.url).href;
             </li>
             {
               Astro.locals.uid ? (
-                <li>
-                  <a
-                    href="/profile"
-                    class="block text-zinc-900 dark:text-gray-200"
-                  >
-                    Profile
-                  </a>
-                </li>
+                <>
+                  <li>
+                    <a
+                      href="/profile"
+                      class="block text-zinc-900 dark:text-gray-200"
+                    >
+                      Profile
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="/api/auth/signout"
+                      class="block whitespace-nowrap text-zinc-900 dark:text-gray-200"
+                    >
+                      Sign&nbsp;out
+                    </a>
+                  </li>
+                </>
               ) : (
                 <>
                   <li>

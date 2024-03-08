@@ -1,14 +1,21 @@
 ---
 import Base from "../layout/Base.astro";
+import { supabase } from "../lib/supabase";
+import { type SkyUser } from "../data";
+import UserInfo from "../components/UserInfo";
 
+const { data } = (await supabase
+  .from("skyuser_view")
+  .select("id,UID,email,type,name,phone,memo,created_at")
+  .eq("UID", Astro.locals.uid)) as { data: SkyUser[] };
+
+// console.log(data);
 ---
 
 <Base title="Profile">
   <main class="flex-1 flex flex-col gap-4 items-center p-4 justify-center">
     <h1 class="text-base sm:text-lg font-bold text-center">Profile Settings</h1>
-    <form>
-
-    </form>
-    <p class="mt-6 max-w-prose"></p>
+    <UserInfo skyUser={data} uid={Astro.locals.uid} client:idle />
+    <!-- <p class="mt-6 max-w-prose"></p> -->
   </main>
 </Base>

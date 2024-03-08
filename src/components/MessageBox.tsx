@@ -3,7 +3,7 @@ import { type Message } from "./MessageItem";
 import MessageItem from "./MessageItem";
 import DataContext from ".";
 
-const MessageBox = ({ uid, setSelection, selection, setOpen, setShowSide, setHistory }: {setHistory:Setter<Message[]>, setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const MessageBox = ({ uid, setSelection, selection, setOpen, setShowSide, setHistory }: { setHistory: Setter<Message[]>, setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, uid: string, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
     // const [count, setCount] = createSignal(0);
     const [messages, setMessages] = createSignal<Message[]>([]);
     const [backup, setBackup] = createSignal<Message[]>([]);
@@ -11,7 +11,6 @@ const MessageBox = ({ uid, setSelection, selection, setOpen, setShowSide, setHis
     // const [selection, setSelection] = createSignal<{ id: string, uid: string } | undefined>();
     const { busy, setBusy } = useContext(DataContext);
     const [error, setError] = createSignal(false);
-    
 
     const getMessages = async () => {
         if (findBusy() >= 0)

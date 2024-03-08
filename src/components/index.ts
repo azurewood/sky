@@ -1,4 +1,5 @@
 import { createContext, createSignal } from "solid-js";
+type T = any;
 
 export interface BusyStatus {
     id: string,
@@ -6,12 +7,19 @@ export interface BusyStatus {
 };
 
 export interface User {
-    user: string,
-    email: string,
+    user: string;
+    email: string;
     name?: string | undefined;
 }
 
 export const updateState = (arr: BusyStatus[], id: string, updatedData: Partial<BusyStatus>): BusyStatus[] => {
+    if (arr.findIndex(item => item.id === id) < 0)
+        return [...arr, { id: id, ...updatedData }];
+    else
+        return arr.map((item) => (item.id === id ? { ...item, ...updatedData } : item))
+}
+
+export const update = (arr: T[], id: string | undefined, updatedData: Partial<T>): T[] => {
     if (arr.findIndex(item => item.id === id) < 0)
         return [...arr, { id: id, ...updatedData }];
     else
