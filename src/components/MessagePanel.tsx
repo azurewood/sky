@@ -6,7 +6,7 @@ import DataContext from "../components";
 import { type BusyStatus, type User } from "../components";
 import { type Message } from "./MessageItem";
 
-const [selection, setSelection] = createSignal<{ id: string; uid: string } | undefined>();
+const [selection, setSelection] = createSignal<{ id: string; uid: string, name?:string } | undefined>();
 const [sending, setSending] = createSignal<boolean>(false);
 const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 const [user, setUser] = createSignal<User[]>([]);
@@ -69,6 +69,7 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
               history={history}
               showSide={showSide}
               setShowSide={setShowSide}
+              selection={selection}
             />
           )
         }

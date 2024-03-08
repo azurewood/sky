@@ -1,9 +1,9 @@
-import { createSignal, createMemo, For, type JSX, type Accessor, type Setter, useContext } from "solid-js";
+import { createSignal, For, type JSX, type Accessor, type Setter, useContext, createMemo } from "solid-js";
 import DataContext, { updateState, type User } from ".";
 import UserItem from "./UserItem";
 
 
-const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSide, setShowSide }: { showSide: Accessor<boolean>, setShowSide: Setter<boolean>, open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, selection: Accessor<{ id: string, uid: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
+const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSide, setShowSide }: { showSide: Accessor<boolean>, setShowSide: Setter<boolean>, open: Accessor<boolean>, setOpen: Setter<boolean>, from: string, selection: Accessor<{ id: string, uid: string, name?: string } | undefined>, sending: Accessor<boolean>, setSending: Setter<boolean> }) => {
   // const [open, setOpen] = createSignal(false);
   const [response, setResponse] = createSignal("");
   const [content, setContent] = createSignal("");
@@ -38,7 +38,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
     e.preventDefault();
     // if (selection()?.uid === undefined) {
     // console.log(userInfo())
-    if (userInfo().user === "") {
+    if (selection.name === "") {
       setResponse("No user is selected!");
       return;
     }
@@ -47,7 +47,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
     const formData = new FormData(formElement);
     // const formData = new FormData(e.target as HTMLFormElement);
     const content = formData.get("content");
-    const owner = userInfo().user; //selection()?.uid;
+    const owner = selection()?.uid;
     if (content === undefined || content?.toString() === undefined || content?.toString().length < 5) {
       setResponse("Message is too short!");
       return;
@@ -114,7 +114,7 @@ const AdminTalk = ({ from, selection, sending, setSending, open, setOpen, showSi
                   class="peer h-full min-h-[130px] w-full resize-none border-b border-blue-gray-200 bg-transparent pt-4 pb-1.5 font-sans text-sm font-normal text-blue-gray-700 rounded-none outline outline-0 transition-all placeholder-shown:border-blue-gray-200 focus:border-gray-900 focus:outline-0 disabled:resize-none disabled:border-0 disabled:bg-blue-gray-50"></textarea>
                 <label for="content"
                   class="after:content[' '] pointer-events-none absolute left-0 -top-2.5 flex h-full w-full select-none text-sm font-normal leading-tight text-blue-gray-500 transition-all after:absolute after:-bottom-1 after:block after:w-full after:scale-x-0 after:border-b-2 after:border-gray-900 after:transition-transform after:duration-300 peer-placeholder-shown:leading-tight peer-placeholder-shown:text-blue-gray-500 peer-focus:text-sm peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:after:scale-x-100 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-                  Dear {userInfo()?.name}&lt;{userInfo()?.email}&gt;,
+                  Dear {selection()?.name}&lt;{userInfo()?.email}&gt;,
                 </label>
                 {/* <input type="text" style="display:none"
                 name="from"

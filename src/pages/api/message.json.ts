@@ -86,7 +86,7 @@ export const GET: APIRoute = async ({ request }) => {
     let result = { received: <Message[]>[], sent: <Message[]>[] };
     if (!error && uid === data.user?.id) {
         const { data, error } = await supabase
-            .from("message")
+            .from("message_name")
             .select("*")
             .eq("read", false)
             .eq("owner", uid)

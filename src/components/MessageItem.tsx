@@ -1,5 +1,5 @@
-import { createSignal, createMemo, type Setter, type Accessor, useContext } from "solid-js";
-import DataContext, { updateState, type User } from ".";
+import { createSignal, type Setter, type Accessor, useContext } from "solid-js";
+import DataContext, { updateState } from ".";
 
 export interface Message {
     id: string;
@@ -8,19 +8,20 @@ export interface Message {
     user: string;
     owner: string;
     read: boolean;
+    name?: string | undefined;
 }
 
-const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShowSide }: { setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string } | undefined>, selection: Accessor<{ id: string, uid: string } | undefined> }) => {
+const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShowSide }: { setShowSide: Setter<boolean> | undefined, setOpen: Setter<boolean>, fresh: boolean, message: Message, setSelection: Setter<{ id: string, uid: string, name?: string } | undefined>, selection: Accessor<{ id: string, uid: string, name?: string } | undefined> }) => {
     const [visible, setVisible] = createSignal(true);
     const [ready, setReady] = createSignal(false);
     const [sending, setSending] = createSignal<boolean>(false);
-    const [userInfo, setUserInfo] = createSignal<User>();
-    const { busy, setBusy, user } = useContext(DataContext);
+    // const [userInfo, setUserInfo] = createSignal<User>();
+    const { busy, setBusy } = useContext(DataContext);
 
-    createMemo(() => {
-        setUserInfo(user().find(a => a.user === message.user));
-        // console.log(userInfo());
-    })
+    // createMemo(() => {
+    //     setUserInfo(user().find(a => a.user === message.user));
+    //     console.log(user());
+    // })
 
     setTimeout(() => setReady(true), 100);
     const handleClose = async (_: any) => {
@@ -50,7 +51,7 @@ const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShow
     }
     const handleClick = (_: any) => {
         // console.log(message.id)
-        setSelection({ id: message.id, uid: message.user });
+        setSelection({ id: message.id, uid: message.user, name: message.name || "" });
         setOpen(true);
         // setShowSide??(false);
         // console.log(setShowSide)
@@ -64,7 +65,7 @@ const MessageItem = ({ fresh, message, setSelection, selection, setOpen, setShow
             (selection()?.id === message.id ? 'bg-blue-600' : 'bg-blue-400 bg-opacity-75') + " " +
             (ready() ? "scale-y-100" : (fresh ? "scale-y-75" : "scale-y-100")) + " " +
             (fresh ? "bg-opacity-95" : "") + " " + (visible() ? 'block' : 'hidden')}>
-            <p class="flex-grow self-center pl-5 max-h-20 overflow-y-scroll overflow-x-clip scrollbar-hide"><strong>{userInfo()?.name}: </strong>{message.content}</p>
+            <p class="flex-grow self-center pl-5 max-h-20 overflow-y-scroll overflow-x-clip scrollbar-hide"><strong>{message.name}: </strong>{message.content}</p>
             <button class={"px-5" + (sending() ? " hidden" : "")} onClick={handleClose}><strong class="text-2xl cursor-pointer select-none">&times;</strong></button>
             {sending() ? <div class='absolute top-0 left-0 h-full w-full opacity-70 bg-slate-100 overflow-hidden'>
                 <div class='animate-pulse w-full h-full bg-slate-500 origin-left-right'></div>
