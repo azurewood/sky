@@ -37,7 +37,7 @@ const MessageBox = ({ uid, setSelection, selection, setOpen, setShowSide, setHis
 
     const timer = setInterval(getMessages, 10000);
 
-    onCleanup(() => { clearInterval(timer) });
+    onCleanup(() => { if (timer) clearInterval(timer) });
 
     const found = (message: Message) => {
         return backup().findIndex(a => message.id === a.id);
