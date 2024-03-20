@@ -6,7 +6,7 @@ import DataContext from "../components";
 import { type BusyStatus, type User } from "../components";
 import { type Message } from "./MessageItem";
 
-const [selection, setSelection] = createSignal<{ id: string; uid: string, name?:string } | undefined>();
+const [selection, setSelection] = createSignal<{ id: string; uid: string, name?: string } | undefined>();
 const [sending, setSending] = createSignal<boolean>(false);
 const [busy, setBusy] = createSignal<BusyStatus[]>([]);
 const [user, setUser] = createSignal<User[]>([]);
@@ -34,45 +34,47 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
 
   return (
     <DataContext.Provider value={{ busy, setBusy, user, setUser }}>
-      <div class="sticky md:fixed bottom-0 right-0 py-10 flex flex-col">
-        <MessageBox
-          //   client:visible
-          uid={from}
-          setSelection={setSelection}
-          selection={selection}
-          setOpen={setOpen}
-          setShowSide={setShowSide}
-          setHistory={setHistory}
-        />
-        {
-          admin ? (
-            <AdminTalk
-              //   client:idle
-              from={from}
-              selection={selection}
-              sending={sending}
-              setSending={setSending}
-              open={open}
-              setOpen={setOpen}
-              showSide={showSide}
-              setShowSide={setShowSide}
-            />
-          ) : (
-            <CustomerTalk
-              //   client:idle
-              from={from}
-              owner={to}
-              sending={sending}
-              setSending={setSending}
-              open={open}
-              setOpen={setOpen}
-              history={history}
-              showSide={showSide}
-              setShowSide={setShowSide}
-              selection={selection}
-            />
-          )
-        }
+      <div class="sticky bottom-0 right-0 py-10 flex w-full justify-end">
+        <div class="flex w-full flex-col md:w-96">
+          <MessageBox
+            //   client:visible
+            uid={from}
+            setSelection={setSelection}
+            selection={selection}
+            setOpen={setOpen}
+            setShowSide={setShowSide}
+            setHistory={setHistory}
+          />
+          {
+            admin ? (
+              <AdminTalk
+                //   client:idle
+                from={from}
+                selection={selection}
+                sending={sending}
+                setSending={setSending}
+                open={open}
+                setOpen={setOpen}
+                showSide={showSide}
+                setShowSide={setShowSide}
+              />
+            ) : (
+              <CustomerTalk
+                //   client:idle
+                from={from}
+                owner={to}
+                sending={sending}
+                setSending={setSending}
+                open={open}
+                setOpen={setOpen}
+                history={history}
+                showSide={showSide}
+                setShowSide={setShowSide}
+                selection={selection}
+              />
+            )
+          }
+        </div>
       </div>
     </DataContext.Provider>
   )
