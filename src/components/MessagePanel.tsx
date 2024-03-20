@@ -34,7 +34,7 @@ const MessagePanel = ({ from, to, admin }: { from: string, to: string, admin: bo
 
   return (
     <DataContext.Provider value={{ busy, setBusy, user, setUser }}>
-      <div class="sticky bottom-0 right-0 py-10 flex w-full justify-end">
+      <div class="sticky bottom-0 right-0 py-5 md:py-10 flex w-full justify-end">
         <div class="flex w-full flex-col md:w-96">
           <MessageBox
             //   client:visible
