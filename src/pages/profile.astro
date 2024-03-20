@@ -13,7 +13,7 @@ const { data } = (await supabase
 ---
 
 <Base title="Profile">
-  <main class="bg-white/30 flex-1 flex flex-col gap-4 items-center p-4 justify-center">
+  <main class="bg-white/30 dark:bg-black/30 flex-1 flex flex-col gap-4 items-center p-4 justify-center">
     <h1 class="text-base sm:text-lg font-bold text-center">Profile Settings</h1>
     <UserInfo skyUser={data} uid={Astro.locals.uid} client:idle />
     <!-- <p class="mt-6 max-w-prose"></p> -->
