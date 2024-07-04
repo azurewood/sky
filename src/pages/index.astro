@@ -7,17 +7,30 @@ const title = "Sky for China stock market";
 ---
 
 <Base title={title}>
-  <main class="bg-white/30 dark:bg-black/30 flex-1 flex flex-col gap-4 items-center p-4 justify-center">
+  <main
+    class="bg-white/30 dark:bg-black/30 flex-1 flex flex-col gap-4 items-center p-4 justify-center"
+  >
     <h1 class="text-2xl sm:text-4xl font-bold text-center">{title}</h1>
+    <img
+      src="./a09d25b16eef2b6f529a69dce8242f55.jpg"
+      width="100%"
+      style={{
+        maxWidth: "1280px",
+        borderRadius: "1rem",
+      }}
+    />
     <ul class="flex gap-6 items-center font-bold text-2xl mt-6">
-      <a aria-label="Sky Indicator Lite" href="https://apps.apple.com/us/app/sky-indicator-lite/id6467558483" class="block h-20 w-20">
+      <a
+        aria-label="Sky Indicator Lite"
+        href="https://apps.apple.com/us/app/sky-indicator-lite/id6467558483"
+        class="block h-20 w-20"
+      >
         <li
           class="dark:bg-zinc-800 bg-white border-t dark:border-zinc-700 h-20 w-20 border-transparent rounded-lg shadow dark:shadow-none flex items-center justify-center"
         >
           <AppIcon />
         </li>
       </a>
-
     </ul>
     <p class="mt-6 max-w-prose"></p>
   </main>
